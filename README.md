@@ -18,6 +18,8 @@ De verschillende handleidingen voor installatie en configuratie zijn te vinden i
   * [Apache Directory Studio](./ApacheLDAPStudio)
   
 Martin Molema
+
 mail: [martin.molema@nhl.nl](mailto:martin.molema@nhl.nl)
+
 8-2-2019
   
