@@ -13,9 +13,9 @@ We gebruiken hiervoor de volgende producten:
 VOor het beheren van de LDAP-entiteiten gebruiken we Apache Directory Studio. 
 
 De verschillende handleidingen voor installatie en configuratie zijn te vinden in onderstaande locaties:
-  * [OpenLDAP](./OpenLdap)
-  * [APache Webserver](./ApacheWebServer)
-  * [Apache Directory Studio](./ApacheLDAPStudio)
+  * [OpenLDAP](./OpenLdap/README.md)
+  * [APache Webserver](./ApacheWebServer/README.md)
+  * [Apache Directory Studio](./ApacheLDAPStudio/README.md)
   
 Martin Molema
 
