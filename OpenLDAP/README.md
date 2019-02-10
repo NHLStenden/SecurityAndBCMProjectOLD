@@ -65,7 +65,7 @@ Testen door middel van een GUI gaat met de Apache Directory Studio. Je kunt deze
 
 [Apache Directory Studio](https://directory.apache.org/studio/downloads.html)
 
-Voor een installatie handleiding klik je [hier](./ApacheLDAPStudio). 
+Voor een installatie handleiding klik je [hier](../ApacheLDAPStudio). 
 
 ## Opvoeren gebruikers en groepen - OrganizationalUnit
 Het is niet gebruikelijk om de in root van je LDAP-tree meteen gebruikers en groepen te maken. Dus maak eerst OrganisationalUnits (OU) . Bijvoorbeeld een OU voor de interne organisatie. 
@@ -111,8 +111,14 @@ In het laatste scherm laten we het attribuut `uniqueMember` voorlopig leeg.
 ![newGroup03](images/ldap-newGroup-03.png)
 
 ## Maken van een gebruiker
-
-[LDAP Password encryptie & Apache WebServer](https://httpd.apache.org/docs/2.4/misc/password_encryptions.html)
+We gaan nu een nieuwe gebruiker aanmaken. We maken een gebruiker door een object te maken van de 
+`objectClass = inetOrgPerson`. Belangrijk om te weten is dat we na afloop van het doorlopen van de wizard
+nog een aantal extra attributen moeten aanmaken, te weten:
+  * `userPassword` : het wachtwoord
+  * `uid`: de gebruikersnaam
+  
+Als RDN gebruiken we het attribuut `CN` (CanonicalName). We krijgen dan de volgende informatie:
+   
 
 ## Koppelen gebruikers aan groep
 
@@ -121,6 +127,5 @@ In het laatste scherm laten we het attribuut `uniqueMember` voorlopig leeg.
 
 
 # Referenties
-  *  [LDAP](https://ldap.com]  
-  *  [LDAP](https://ldap.com]  
-)
+  * [LDAP](https://ldap.com]) 
+  * [LDAP Password encryptie & Apache WebServer](https://httpd.apache.org/docs/2.4/misc/password_encryptions.html)
