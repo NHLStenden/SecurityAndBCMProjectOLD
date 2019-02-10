@@ -14,7 +14,7 @@ Na afloop van de installatie moeten we de OpenLDAP nog wel verder configureren. 
 $ sudo dpk-reconfigure slapd
 ```
 
-Je krijgt een aantal vragen te zien:
+Je krijgt een aantal vragen te zien zoals weergegeven in onderstaande afbeeldingen. Neem de instellingen over.
 
 ![slapd01](images/slapd-reconfig-01.png)
 
@@ -80,6 +80,7 @@ Ga naar het menu, dan `LDAP` en `New Entry`. Zorg dat de root-node `dc=Samenfit,
 Type bij `Available object classes` de tekst `Org` en er verschijnt een verkorte lijst. Kies voor `organizationalUnit` en klik op de `Add` button. 
 
 ![newOU02](images/ldap-newOU-02.png)
+
 ![newOU02](images/ldap-newOU-03.png)
 
 Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ 
@@ -106,12 +107,15 @@ Klik op `Finish` om de wizard af te ronden.
 
 ## Aanmaken groep 
 De volgende stap is het maken van een Groep. 
+
 ![newGroup03](images/ldap-newGroup-00.png)
 
 ![newGroup03](images/ldap-newGroup-01.png)
+
 ![newGroup03](images/ldap-newGroup-02.png)
 
 In het laatste scherm laten we het attribuut `uniqueMember` voorlopig leeg.
+
 ![newGroup03](images/ldap-newGroup-03.png)
 
 ## Maken van een gebruiker
