@@ -15,6 +15,7 @@ $ sudo dpk-reconfigure slapd
 ```
 
 Je krijgt een aantal vragen te zien:
+
 ![slapd01](images/slapd-reconfig-01.png)
 
 ![slapd01](images/slapd-reconfig-02.png)
@@ -71,6 +72,7 @@ Voor een installatie handleiding klik je [hier](../ApacheLDAPStudio).
 Het is niet gebruikelijk om de in root van je LDAP-tree meteen gebruikers en groepen te maken. Dus maak eerst OrganisationalUnits (OU) . Bijvoorbeeld een OU voor de interne organisatie. 
 
 Ga naar het menu, dan `LDAP` en `New Entry`. Zorg dat de root-node `dc=Samenfit,dc=local` geselecteerd is.  Doorloop de wizard en vul de juiste gegevens in:
+
 ![newOU01](images/ldap-newOU-00.png)
 
 ![newOU01](images/ldap-newOU-01.png)
@@ -89,8 +91,10 @@ Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. W
 Om rechten uit te geven is het vaak handig om gebruikers in groepen op te nemen. De volgende stap is dus het aanmaken van een gebruikersgroep.  Hiervoor maken we eerst op een wat slimmere manier een nieuwe OU. 
 
 Selecteer eerst de eerder gemaakte OU en klik met de rechter muisknop op deze OU, en kies uit het lokale menu 'New Entry':
+
 ![newOU03](images/ldap-newOU2-00.png)
 Merk op dat we nu een template gebruiken van de zojuist geselecteerde OU. Nu kunnen we sneller door de wizard heen. 
+
 ![newOU03](images/ldap-newOU2-01.png)
 Vergeet niet de RDN aan te passen! Noem deze OU `groups`. 
 
@@ -116,14 +120,58 @@ We gaan nu een nieuwe gebruiker aanmaken. We maken een gebruiker door een object
 nog een aantal extra attributen moeten aanmaken, te weten:
   * `userPassword` : het wachtwoord
   * `uid`: de gebruikersnaam
+  * `sn`: de achternaam (`surname`)
   
 Als RDN gebruiken we het attribuut `CN` (CanonicalName). We krijgen dan de volgende informatie:
    
+![newUser01](images/ldap-new-user01.png)
+
+![newUser02](images/ldap-new-user02.png)
+
+![newUser03](images/ldap-new-user03.png)
+
+![newUser04](images/ldap-new-user04.png)
+
+![newUser05](images/ldap-new-user05.png)
+
+Je kunt eventueel nog de givenNaam (voornaam) invoeren. Je doet dit door met de rechtermuisknop in de lijst
+met attributen te klikken, en dan te kiezen voor `New Attribute`.  
+
+Daarna voeren we het attribuut `userPassword` op. Na het aanmaken krijg je meteen een dialoogvenster om het wachtwoord in te voeren.
+
+![newUser07](images/ldap-new-user07.png)
+
+![newUser08](images/ldap-new-user08.png)
+
+![newUser10](images/ldap-new-user10.png)
+
 
 ## Koppelen gebruikers aan groep
+Nu we gebruikers hebben gemaakt, kunnen we ze aan groepen koppelen. We gebruiken het attribuut `uniqueMember`
+dat een zogenaamd `multivalue` attribuut is. Dat betekent dat het vaker mag voorkomen bij een object. Handig!
+Zo kunnen we dus eenvoudig meerdere gebruikers in een groep koppelen. 
 
+Dat gaat vrij eenvoudig:
+  1. ga naar de DIT (Directory information tree) links
+  2. selecteer de gebruiker die je in een groep wilt toevoegen
+  3. kopieer deze gebruiker (met bijv. Ctrl+C)
+  4. selecteer de groep waar je deze gebruiker aan wilt toevoegen
+  5. selecteer het lege attribuut `uniqueMember`
+  6. druk op plakken, en zie dat de `DN` (DistinguishedName) tevoorschijn komt.
+  7. Druk op `Enter` om te bevestigen
+  
+Wil je nog een gebruiker toevoegen? Herhaal dan stappen 1 t/m 4. Ga vervolgens hieronder verder:
+  1. selecteer het attribuut `uniqueMember`
+  2. ga naar het menu-->LDAP-->Add value , of gebruik de rechter muisknop op het attribuut `uniqueMember`
+  en kies  `Add Value`.
+  3. plak de `DN` in het nieuwe attribuut.
+  
+  
+Uiteindelijk ziet dat er als volgt uit:
+![linkusergroup-01](images/ldap-link-group-user01.png)
 
-
+Maak nu meerdere gebruikers aan en stop deze in de juiste groepen. Het idee is dat je op basis van groepen
+andere toegangsrechten in je website / Apache Webserver kunt toekennen.
 
 
 # Referenties
