@@ -130,7 +130,9 @@ nog een aantal extra attributen moeten aanmaken, te weten:
   * `uid`: de gebruikersnaam
   * `sn`: de achternaam (`surname`)
   
-Als RDN gebruiken we het attribuut `CN` (CanonicalName). 
+Als RDN gebruiken we het attribuut `CN` (CanonicalName). Selecteer eerst de juiste plek om de gebruiker 
+aan te maken: 
+
 
 We krijgen dan de volgende informatie:
    
