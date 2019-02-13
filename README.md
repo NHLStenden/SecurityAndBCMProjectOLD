@@ -18,6 +18,10 @@ het beste in onderstaande volgorde doorlopen worden:
   1. [Installatie Apache Directory Studio](./ApacheLDAPStudio/README.md)
   1. [Installatie Apache Webserver](./ApacheWebServer/README.md)
   
+Uiteindelijk kun je onderstaande landschap inrichten:
+
+![Landschap](images/ProjectSecurity&Risk.png)  
+
 Martin Molema
 
 mail: [martin.molema@nhl.nl](mailto:martin.molema@nhl.nl)
