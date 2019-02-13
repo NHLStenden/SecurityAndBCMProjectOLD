@@ -55,7 +55,7 @@ Bij de `<VirtualHost>` staat een poort waar naar geluisterd wordt. Poort nummer 
 betekent dat er naar alle IP-adressen wordt geluisterd. Zie bij de [Referenties](#referenties) onderaan deze pagina voor meer informatie 
 rondom configuratie van virtuele hosts.
 
-De `DocumentRoot` geeft aan op welk pad (absoluut) de bestanden van de webserver gevonden kunnen worden.
+De `DocumentRoot` geeft aan op welk pad (absoluut) de bestanden van de webserver gevonden kunnen worden. 
 
 De `ServerName` is belangrijk! De waarde van deze instelling is de URL die de gebruiker in moet typen. 
 
