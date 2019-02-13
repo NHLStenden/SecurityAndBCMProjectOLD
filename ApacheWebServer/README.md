@@ -29,7 +29,7 @@ Na de installatie is er slechts een basis-site. Hier gaan we wat aan doen. Open 
 nano (Terminal), Scite (GUI) of gedit (GUI). In deze editor gaan we een nieuw bestand maken genaamd `samenfit.conf`:
 
 ```bash
-  $ sudo gedit /etc/apache/sites-available/samenfit.conf
+  $ sudo gedit /etc/apache2/sites-available/samenfit.conf
 ```
 
 De meest basis configuratie ziet er ongeveer zo uit:
@@ -45,7 +45,7 @@ De meest basis configuratie ziet er ongeveer zo uit:
    <Directory "/home/martin/samenfit/">
       Require all granted
    </Directory>
-
+  </VirtualHost>
 ```
 
 Van boven naar beneden enige uitleg. De configuratie is opgeslagen tussen `<VirtualHost>` en `</VirtualHost>`.

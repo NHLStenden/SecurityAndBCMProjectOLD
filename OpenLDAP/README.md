@@ -88,6 +88,10 @@ Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. W
 
 ![newOU03](images/ldap-newOU-04.png)
 
+Herhaal deze stappen voor het aanmaken van een ORganizationalUnit voor de Users:
+
+`ou=users, dc=samenfit,dc=local`
+
 ## Opvoeren gebruikers en groepen - usergroups
 Om rechten uit te geven is het vaak handig om gebruikers in groepen op te nemen. De volgende stap is dus het aanmaken van een gebruikersgroep.  Hiervoor maken we eerst op een wat slimmere manier een nieuwe OU. 
 
@@ -126,7 +130,9 @@ nog een aantal extra attributen moeten aanmaken, te weten:
   * `uid`: de gebruikersnaam
   * `sn`: de achternaam (`surname`)
   
-Als RDN gebruiken we het attribuut `CN` (CanonicalName). We krijgen dan de volgende informatie:
+Als RDN gebruiken we het attribuut `CN` (CanonicalName). 
+
+We krijgen dan de volgende informatie:
    
 ![newUser01](images/ldap-new-user01.png)
 
