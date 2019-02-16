@@ -89,12 +89,14 @@ of interactief:
   $ sudo a2ensite 
   Your choices are: 000-default default-ssl samenfit.conf 
   Which site(s) do you want to enable (wildcards ok)?
-  samenfit*
+  *samenfit*
   Enabling site samenfit.
   To activate the new configuration, you need to run:
     service apache2 reload
   $
 ```
+**let op**: de sterretjes (*) rondom `*samenfit*` moet je **wel** invoeren! Dit zijn wildcards zodat je niet exact de naam
+hoeft in te voeren.
 
 Na afloop moet je nog de webserver herladen (`reload`) of herstarten (`restart`):
 ```bash
@@ -102,11 +104,13 @@ Na afloop moet je nog de webserver herladen (`reload`) of herstarten (`restart`)
 ```
 
 ## Fouten bij herstarten webserver
+<A name="fouten" />
+ 
 Soms krijg je fouten bij het starten/herladen van de configuratie van de webserver. Een typische foutmelding is dan:
 ```bash
 Job for apache2.service failed. See 'systemctl status apache2.service' and 'journalctl -xn' for details.
 ```
-Voer in dat geval het gesuggeerde commando uit:
+Voer in dat geval het gesuggeerde commando uit: (in dit geval zit er een fout in de configuratie van LDAP die je pas in de volgende stap maakt)
 ```bash
  $ systemctl status apache2.service
  ● apache2.service - LSB: Apache2 web server
@@ -137,7 +141,7 @@ op bepaalde beveiligde mappen mogen kijken. We gebruiken hiervoor de LDAP-identi
 hebben geinstalleerd. 
 
 Het komt er op neer dat een gebruiker 
-  * geauthenticeerd moet zijn (bewijs van wie je bent)
+  * geauthentiseerd moet zijn (bewijs van wie je bent)
   * geautoriseerd zijn (wat mag je?)
 
 Dat betekent dat we toegang tot een submap `intranet` in onze webserver omgeving gaan beveiligen. Een gebruiker
@@ -172,14 +176,61 @@ andere veiligere methodes om zo'n wachtwoord kenbaar te maken op deze manier. Ki
 In de logfiles is dat verschil niet altijd duidelijk. Als je een foutmelding krijgt dat de gebruiker niet gevonden kan
 worden, heeft dat vaak ook met toegang van **stap 1** te maken!
 
+## Laden van modules voor Apache LDAP
+Om te zorgen dat LDAP ook daadwerkelijk bruikbaar is voor Apache2, moet je deze aanzetten. Dat doe je met het commando 
+`a2enmod` (Apache2 Enable Module). Dat gaat net als bij `a2ensite` interactief of met een commandline parameter:
+
+```bash
+$ sudo a2enmod 
+Your choices are: access_compat actions alias allowmethods asis auth_basic auth_digest auth_form authn_anon authn_core 
+authn_dbd authn_dbm authn_file authn_socache authnz_fcgi authnz_ldap authz_core authz_dbd authz_dbm authz_groupfile 
+authz_host authz_owner authz_user autoindex buffer cache cache_disk cache_socache cern_meta cgi cgid charset_lite data 
+dav dav_fs dav_lock dbd deflate dialup dir dump_io echo env expires ext_filter file_cache filter headers 
+heartbeat heartmonitor http2 ident imagemap include info lbmethod_bybusyness lbmethod_byrequests lbmethod_bytraffic 
+lbmethod_heartbeat ldap log_debug log_forensic lua macro mime mime_magic mpm_event mpm_prefork mpm_worker negotiation 
+proxy proxy_ajp proxy_balancer proxy_connect proxy_express proxy_fcgi proxy_fdpass proxy_ftp proxy_hcheck 
+proxy_html proxy_http proxy_http2 proxy_scgi proxy_wstunnel ratelimit reflector remoteip reqtimeout request 
+rewrite sed session session_cookie session_crypto session_dbd setenvif slotmem_plain slotmem_shm socache_dbm 
+socache_memcache socache_shmcb speling ssl status substitute suexec unique_id userdir usertrack vhost_alias xml2enc
+Which module(s) do you want to enable (wildcards ok)?
+*ldap*
+Considering dependency ldap for authnz_ldap:
+Enabling module ldap.
+Enabling module authnz_ldap.
+Module ldap already enabled
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+  
+```
+**let op**: de sterretjes (*) rondom `*ldap*` moet je **wel** invoeren! Dit zijn wildcards zodat je niet exact de naam
+hoeft in te voeren.
+
+of interactief:
+```bash
+root@NHLStendenSecurityRisk:~# a2enmod ldap authnz_ldap
+Enabling module ldap.
+Considering dependency ldap for authnz_ldap:
+Module ldap already enabled
+Enabling module authnz_ldap.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+```
+
+Let op dat de volgende modules nodig zijn:
+  * ldap
+  * authnz_ldap
+  
+Herstart na afloop van deze commando's de Apache2 Webserver 
+  
+
 ## Testen en testen en testen en...
 Het werkend krijgen van deze configuratie is niet eenvoudig. Een paar tips:
   * Zet het loglevel van de LDAP-module op DEBUG: `loglevel error authnz_ldap:debug`
+  * monitor de logfile met `tail -f /var/log/apache2/error.samenfit.log` (de naam uit de configuratie file)
   * als je een configuratie wijzigt, herstart dan de webserver : `sudo service apache2 restart`.
   dit zorgt er voor dat de cache van LDAP geleegd wordt en je weer met schone wachtwoorden begint.
-  * monitor de logfile met `tail -f /var/log/apache2/error.samenfit.log`
   * als je Apache2 herstart, en je krijgt een foutmelding dan staat er een commando dat je kunt uitvoeren
-  om problemen te onderzoeken. Maak daar gebruik van en lees zorgvuldig de output van dat commando!
+  om problemen te onderzoeken. Maak daar gebruik van en lees zorgvuldig de output van dat commando! (zie ook [hier](./#fouten))
   * test eventueel je configuratie van Apache met `apache2 -S `
   
 Veel voorkomende problemen:
