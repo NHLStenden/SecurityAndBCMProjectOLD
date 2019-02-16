@@ -68,6 +68,13 @@ Testen door middel van een GUI gaat met de Apache Directory Studio. Je kunt deze
 
 Voor een installatie handleiding klik je [hier](../ApacheLDAPStudio). 
 
+Om de versie te controleren van je LDAP-service, klik je op de server-configuratie links onderin. 
+Met de rechter muisknop open je het lokale menu, en vraag de `properties` op via dat menu. Klik vervolgens het uitklap menu
+open onder `Connection` (linker paneel) en klik op de `Root DSE`. Je ziet het versienummer ('Directory type' = 2.4) wat kan
+helpen bij het nalopen van problemen. 
+ 
+![ldap-version](images/ldap-versioninfo.png)
+
 ## Opvoeren gebruikers en groepen - OrganizationalUnit
 Het is niet gebruikelijk om de in root van je LDAP-tree meteen gebruikers en groepen te maken. Dus maak eerst OrganisationalUnits (OU) . Bijvoorbeeld een OU voor de interne organisatie. 
 
@@ -133,11 +140,10 @@ nog een aantal extra attributen moeten aanmaken, te weten:
 Als RDN gebruiken we het attribuut `CN` (CanonicalName). Selecteer eerst de juiste plek om de gebruiker 
 aan te maken: 
 
+`ou=users,ou=samenfit,dc=samenfit,dc=local`
 
 We krijgen dan de volgende informatie:
    
-![newUser01](images/ldap-new-user01.png)
-
 ![newUser02](images/ldap-new-user02.png)
 
 ![newUser03](images/ldap-new-user03.png)
@@ -146,16 +152,57 @@ We krijgen dan de volgende informatie:
 
 ![newUser05](images/ldap-new-user05.png)
 
+![newUser07](images/ldap-new-user06.png)
 Je kunt eventueel nog de givenNaam (voornaam) invoeren. Je doet dit door met de rechtermuisknop in de lijst
 met attributen te klikken, en dan te kiezen voor `New Attribute`.  
 
+![newUser08](images/ldap-new-user07.png)
+
 Daarna voeren we het attribuut `userPassword` op. Na het aanmaken krijg je meteen een dialoogvenster om het wachtwoord in te voeren.
 
-![newUser07](images/ldap-new-user07.png)
+![newUser10](images/ldap-new-user08.png)
 
-![newUser08](images/ldap-new-user08.png)
+Let op: je kiest hier voor CRYPT-SHA-265 en niet voor SHA-256. Deze laatste staat je wel toe om een wachtwoord op te voeren
+maar niet meer om er verbinding mee te maken. Zie [verderop](#wachtwoord) voor een testprocedure
+
+![newUser10](images/ldap-new-user09.png)
 
 ![newUser10](images/ldap-new-user10.png)
+
+
+## Testen juist wachtwoord
+<A name="wachtwoord">
+Als je een wachtwoord en encryptie hebt gekozen, test dan je wachtwoord. Dat gaat als volgt:
+  1. Zoek de gebruiker op in de DIT
+  2. dubbelklik op het attribuut `userPassword` om het dialoogvenster van het wachtwoord te openen
+  3. voer bij het veld `Verify Password` je wachtwoord in van de gekozen user
+  4. zet de vinkjes aan bij `Show current password details` en `Show test password details`
+  5. Klik op `Verify` om je wachtwoord te testen
+
+Je weet nu of je wachtwoord juist is. De volgende stap is bedoeld om je te testen of je dat wachtwoord
+ook kunt gebruiken om een `LDAP bind` te doen. Lukt dat niet, dan kun je de gekozen wachtwoord versleuteling
+niet gebruiken. 
+
+  1. Druk op de knop `Bind`
+  2. als je een foutmelding krijgt is de gekozen versleuteling niet juist.
+  3. als je een bevestiging krijgt, dan kun je met deze user verbinding maken
+  
+**Let op**: Dit geldt zowel voor de gebruiker die in je `apache config` hebt staan (AuthLDAPBindDN) 
+als voor gebruikers die willen inloggen via jouw website op een beveiligde map. 
+
+Hieronder nog de schermafdrukken:
+
+* selecteer gebruiker
+![ldap-check-password02](images/ldap-check-password02.png)
+
+* Password editor
+![ldap-check-password03](images/ldap-check-password03.png)
+
+* wachtwoord verificatie
+![ldap-check-password04](images/ldap-check-password04.png)
+
+* bruikbaarheid wachtwoord voor `ldap-bind`
+![ldap-check-password05](images/ldap-check-password05.png)
 
 
 ## Koppelen gebruikers aan groep
