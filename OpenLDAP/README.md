@@ -232,7 +232,99 @@ Uiteindelijk ziet dat er als volgt uit:
 Maak nu meerdere gebruikers aan en stop deze in de juiste groepen. Het idee is dat je op basis van groepen
 andere toegangsrechten in je website / Apache Webserver kunt toekennen.
 
+# LDAP beveiligen
+
+Nu hebben we de LDAP zaken op orde, maar moeten we nog voorkomen dat we met de *admin*-account alle wijzigingen moeten doen.
+Daarom gebruiken we de nieuwe users `webuserldap` om deze rechten te geven om dit te doen. Daarvoor moeten we zogenaamde
+ACL's (*Access Control List*) opvoeren. Zie voor uitgebreide informatie de link onderaan.  
+
+Dat gaat via het commando `ldapmodify`.
+
+Eerst moeten we kijken wat de huidige stand van zaken is. Dat gaat met `slapcat`. Er volgt dan zeer veel informatie. We 
+zijn op zoek naar `dn: olcDatabase={1}mdb,cn=config`. Vervolgens staan er een aantal `olcAccess`-regels.
+
+```
+$ slapcat -n 0 
+[............snip................]
+dn: olcDatabase={1}mdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {1}mdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: dc=samenfit,dc=local
+olcAccess: {0}to attrs=userPassword by self write by anonymous auth by * non
+ e
+olcAccess: {1}to attrs=shadowLastChange by self write by * read
+olcAccess: {2}to * by * read
+olcLastMod: TRUE
+olcRootDN: cn=admin,dc=samenfit,dc=local
+olcRootPW:: e1NTSEF9d3Y0QUJqeEZCM1ZMd0ltSGlZSk52dkxtSVF1bS9ybkU=
+olcDbCheckpoint: 512 30
+olcDbIndex: objectClass eq
+olcDbIndex: cn,uid eq
+olcDbIndex: uidNumber,gidNumber eq
+olcDbIndex: member,memberUid eq
+olcDbMaxSize: 1073741824
+structuralObjectClass: olcMdbConfig
+entryUUID: 35dbe322-c1ad-1038-95fa-4509ec9fd54a
+creatorsName: cn=admin,cn=config
+createTimestamp: 20190210182704Z
+entryCSN: 20190301123232.469443Z#000000#000#000000
+modifiersName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+modifyTimestamp: 20190301123232Z
+
+```
+
+Het gaat om `olcAccess: {2}to * by * read`. Deze zorgt voor leesrechten `read` op alle objecten (`to *`) voor alle gebruikers (`by *`). Doordat de 
+regels een voorrangsregeling kennen, moeten we die regel `{2}` vervangen door iets anders. Namelijk: geef de user `webuserldap` alle rechten (`manage`). 
+Tegelijkertijd moeten we er voor zorgen dat in diezelfde regel óók leesrechten hersteld worden voor alle gebruikers op alle objecten. 
+
+A) Maak een bestand genaamd 'grants.ldif' met onderstaande inhoud:
+  
+```ldif  
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {2}
+
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: to dn.subtree="ou=samenfit,dc=samenfit,dc=local" by dn.base="cn=webuserldap,ou=users,ou=samenfit,dc=samenfit,dc=local" manage by * read
+-
+add: olcAccess
+olcAccess: to * by * read
+-
+```
+
+B) Voer vervolgens onderstaande commando uit als `root`.
+```bash
+ $ ldapmodify -Y EXTERNAL -H ldapi:/// -f grants.ldif
+```
+
+C) Controleer de nieuwe situatie:
+```bash
+ $ slapcat -n 0
+ [............snip................]
+ olcAccess: {0}to attrs=userPassword by self write by anonymous auth by * non
+  e
+ olcAccess: {1}to attrs=shadowLastChange by self write by * read
+ olcAccess: {2}to dn.subtree="ou=samenfit,dc=samenfit,dc=local" by dn.base="c
+  n=webuserldap,ou=users,ou=samenfit,dc=samenfit,dc=local" manage by * read
+ olcAccess: {3}to * by * read
+
+```
+
+Vanaf nu is het mogelijk om met de user `webuserldap` de LDAP-objecten te managen onder de DN `ou=samenfit,dc=samenfit,dc=local`.
+
+Je kunt dit testen door in de LDAP-GUI de connection settings te veranderen naar de user `webuserldap`. 
+
+Zie ook het voorbeeld om met PHP een user aan te maken. 
 
 # Referenties
-  * [LDAP](https://ldap.com]) 
+  * [LDAP](https://ldap.com) 
   * [LDAP Password encryptie & Apache WebServer](https://httpd.apache.org/docs/2.4/misc/password_encryptions.html)
+  * [LDAP Access Control (openLDAP)](https://www.openldap.org/doc/admin24/access-control.html)
+
+
+
