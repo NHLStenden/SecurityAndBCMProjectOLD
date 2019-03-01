@@ -23,7 +23,7 @@ Uiteindelijk kun je onderstaande landschap inrichten:
 ![Landschap](images/ProjectSecurity&Risk.png)  
 
 ## PHP & LDAP
-Mocht je met LDAP en PHP aan de slag willen dan moet je gebruik maken van de PHP []LDAP module](http://php.net/manual/en/book.ldap.php).
+Mocht je met LDAP en PHP aan de slag willen dan moet je gebruik maken van de PHP [LDAP module](http://php.net/manual/en/book.ldap.php).
 
   * Maak eerst verbinding met [ldap_connect](http://php.net/manual/en/function.ldap-connect.php)
   * Doe een [ldap-bind](http://php.net/manual/en/function.ldap-bind.php) met de juiste
