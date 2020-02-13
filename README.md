@@ -14,7 +14,7 @@ VOor het beheren van de LDAP-entiteiten gebruiken we Apache Directory Studio.
 
 De verschillende handleidingen voor installatie en configuratie zijn te vinden in onderstaande locaties. Deze kunnen
 het beste in onderstaande volgorde doorlopen worden:
-  1. [Installatie & Configuratie Virtuele Machine](./files/Installatie & Configuratie Virtuele Machine.pdf)
+  1. [Installatiehandleiding Debian]( ./files/Installatie%20%26%20Configuratie%20Virtuele%20Machine.pdf )
   1. [Installatie OpenLDAP](./OpenLDAP/README.md)
   1. [Installatie Apache Directory Studio](./ApacheLDAPStudio/README.md)
   1. [Installatie Apache Webserver](./ApacheWebServer/README.md)
