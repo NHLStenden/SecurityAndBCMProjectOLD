@@ -26,23 +26,23 @@ Accepteer alle gesuggereerde pakketten en start de installatie.
 
 ## Basis configuratie
 Na de installatie is er slechts een basis-site. Hier gaan we wat aan doen. Open als `root` een editor, zoals 
-nano (Terminal), Scite (GUI) of gedit (GUI). In deze editor gaan we een nieuw bestand maken genaamd `samenfit.conf`:
+nano (Terminal), Scite (GUI) of gedit (GUI). In deze editor gaan we een nieuw bestand maken genaamd `mijnsite.conf`:
 
 ```bash
-  $ sudo gedit /etc/apache2/sites-available/samenfit.conf
+  $ sudo gedit /etc/apache2/sites-available/mijnsite.conf
 ```
 
 De meest basis configuratie ziet er ongeveer zo uit:
 ```apacheconf
  <VirtualHost  *:80>
-   DocumentRoot /home/martin/samenfit/
-   ServerName samenfit.local
+   DocumentRoot /home/martin/mijnsite/
+   ServerName mijnsite.local
    
-   ErrorLog "/var/log/apache2/error.samenfit.log"
-   CustomLog "/var/log/apache2/access.samenfit.log" common
+   ErrorLog "/var/log/apache2/error.mijnsite.log"
+   CustomLog "/var/log/apache2/access.mijnsite.log" common
    loglevel error
 
-   <Directory "/home/martin/samenfit/">
+   <Directory "/home/martin/mijnsite/">
       Require all granted
    </Directory>
   </VirtualHost>
@@ -78,8 +78,8 @@ Nu we een bestand hebben gemaakt, moeten we deze configuratie nog activeren. Dat
 Apache2 enable site). Je kunt het bestand dat je wilt activeren opgeven, of interactief werken:
 
 ```bash
-  $ sudo a2ensite samenfit.conf
-  Enabling site samenfit.
+  $ sudo a2ensite mijnsite.conf
+  Enabling site mijnsite.
   To activate the new configuration, you need to run:
     service apache2 reload
   $ 
@@ -87,21 +87,48 @@ Apache2 enable site). Je kunt het bestand dat je wilt activeren opgeven, of inte
 of interactief:
 ```bash
   $ sudo a2ensite 
-  Your choices are: 000-default default-ssl samenfit.conf 
+  Your choices are: 000-default default-ssl mijnsite.conf 
   Which site(s) do you want to enable (wildcards ok)?
-  *samenfit*
-  Enabling site samenfit.
+  *mijnsite*
+  Enabling site mijnsite.
   To activate the new configuration, you need to run:
     service apache2 reload
   $
 ```
-**let op**: de sterretjes (*) rondom `*samenfit*` moet je **wel** invoeren! Dit zijn wildcards zodat je niet exact de naam
+**let op**: de sterretjes (*) rondom `*mijnsite*` moet je **wel** invoeren! Dit zijn wildcards zodat je niet exact de naam
 hoeft in te voeren.
 
 Na afloop moet je nog de webserver herladen (`reload`) of herstarten (`restart`):
 ```bash
   $ sudo service apache2 restart
 ```
+## Default Configuratie uitzetten
+De kans is groot dat jouw installatie van Apache een default configuratie heeft geinstalleerd én geactiveerd. Deze moeten
+we nog uitzetten omdat deze standaardconfiguratie *al het webverkeer* afvangt. Jouw eigen configuratie komt zo dus nooit aan bod.
+
+Dit uitzetten doe je met het commando `a2dissite`: Apache2 Disable Site. Om te kijken welke configuraties al actief zijn kijk 
+je in de map `/etc/apache2/sites-enabled`. Bijvoorbeeld:
+
+```bash
+	$ sudo ls -la /etc/apache2/sites-available
+	total 24
+	drwxr-xr-x 2 root root 4096 Feb 12 17:13 .
+	drwxr-xr-x 8 root root 4096 Feb 12 15:19 ..
+	-rw-r--r-- 1 root root 1332 Nov  3  2018 000-default.conf
+	-rw-r--r-- 1 root root 6338 Jun 16  2019 default-ssl.conf
+	-rw-r--r-- 1 root root  587 Feb 12 17:13 mijnsite.conf
+	
+	$ ls -la /etc/apache2/sites-enabled/
+	total 8
+	drwxr-xr-x 2 root root 4096 Feb 13 07:25 .
+	drwxr-xr-x 8 root root 4096 Feb 12 15:19 ..
+	lrwxrwxrwx 1 root root   35 Feb 13 07:25 000-default.conf -> ../sites-available/000-default.conf
+	lrwxrwxrwx 1 root root   32 Feb 12 17:14 mijnsite.conf -> ../sites-available/mijnsite.conf
+
+```
+Kijk wat de inhoud is van het configuratiebestand '000-default.conf'. Waarschijnlijk bevat het *geen* ServerName (er staat een # voor)
+zodat deze als commentaar wordt gezien. Het effect is dat deze configuratie al het verkeer van poort 80 (zie eerste regel van het configuratie
+bestand) afvangt en een standaard pagina serveert.
 
 ## Fouten bij herstarten webserver
 <A name="fouten" />
@@ -122,18 +149,30 @@ Voer in dat geval het gesuggeerde commando uit: (in dit geval zit er een fout in
    Process: 6442 ExecReload=/etc/init.d/apache2 reload (code=exited, status=0/SUCCESS)
    Process: 6686 ExecStart=/etc/init.d/apache2 start (code=exited, status=1/FAILURE)
  
- Feb 08 15:17:05 audioplayer apache2[6686]: Starting web server: apache2 failed!
- Feb 08 15:17:05 audioplayer apache2[6686]: The apache2 configtest failed. ... (warning).
- Feb 08 15:17:05 audioplayer apache2[6686]: Output of config test was:
- Feb 08 15:17:05 audioplayer apache2[6686]: AH00526: Syntax error on line 24 of /etc/apache2/sites-enabled/samenfit.conf:
- Feb 08 15:17:05 audioplayer apache2[6686]: AuthLDAPBindDN takes one argument, DN to use to bind to LDAP server. If not provided, will do an anonymous bind.
- Feb 08 15:17:05 audioplayer apache2[6686]: Action 'configtest' failed.
- Feb 08 15:17:05 audioplayer apache2[6686]: The Apache error log may have more information.
- Feb 08 15:17:05 audioplayer systemd[1]: apache2.service: control process exited, code=exited status=1
- Feb 08 15:17:05 audioplayer systemd[1]: Failed to start LSB: Apache2 web server.
- Feb 08 15:17:05 audioplayer systemd[1]: Unit apache2.service entered failed state.
+ Feb 08 15:17:05 risksec apache2[6686]: Starting web server: apache2 failed!
+ Feb 08 15:17:05 risksec apache2[6686]: The apache2 configtest failed. ... (warning).
+ Feb 08 15:17:05 risksec apache2[6686]: Output of config test was:
+ Feb 08 15:17:05 risksec apache2[6686]: AH00526: Syntax error on line 24 of /etc/apache2/sites-enabled/mijnsite.conf:
+ Feb 08 15:17:05 risksec apache2[6686]: AuthLDAPBindDN takes one argument, DN to use to bind to LDAP server. If not provided, will do an anonymous bind.
+ Feb 08 15:17:05 risksec apache2[6686]: Action 'configtest' failed.
+ Feb 08 15:17:05 risksec apache2[6686]: The Apache error log may have more information.
+ Feb 08 15:17:05 risksec systemd[1]: apache2.service: control process exited, code=exited status=1
+ Feb 08 15:17:05 risksec systemd[1]: Failed to start LSB: Apache2 web server.
+ Feb 08 15:17:05 risksec systemd[1]: Unit apache2.service entered failed state.
 ```
 
+## Rechten goed zetten
+Het Apache proces draait als een achtergrond proces ("Daemon") en is hiervoor ingelogd met de gebruiker `www-data`. Deze gebruiker
+moet de juiste rechten krijgen op de map waar jouw website opgeslagen is. Er zijn twee varianten:
+1. Gebruik `/var/www/ ` om je website op de hosten
+2. Gebruik je home-drive als locatie (bijv `/home/martin/website/`)
+
+Beide hebben hun voor en nadelen. Als je voor de eerste optie gaat, dan heeft de webserver waarschijnlijk al de juiste rechten
+maar jij als gebruiker niet. 
+Als je voor de tweede optie gaat, dan heb jij wel rechten maar de webserver niet. 
+
+Om dit te repareren maak je gebruik van de commando's `chgrp`, `chown` en `chmod`. Tip: er is niet alleen een gebruiker `www-data`  
+maar ook een group `www-data`.  Op deze manier kun je de eigenaar en de groep van een map / submappen eenvoudiger besturen.
 
 ## Advanced configuration
 De volgende stap is het opnemen van beperkingen in de toegang: we willen niet dat alle gebruikers zomaar
@@ -152,7 +191,7 @@ autorisatiegroep zit. Zo niet, dan krijgt de webserver domweg geen toegang tot d
 laadt, dan zijn de identiteit & autorisatieniveau reeds vastgesteld.
 
 We passen de configuratie aan. Deze nieuwe configuratie opgeslagen in een los bestand, omdat deze nogal 
-uitgebreid is. Het bestand is [hier](files/samenfit.conf) te vinden. 
+uitgebreid is. Het bestand is [hier](files/mijnsite.conf) te vinden. 
 
 Een paar opvallende zaken:
   * Om een gebruiker te kunnen zoeken is toegang nodig tot de LDAP-service. Hiervoor zijn een gebruikersnaam
@@ -161,7 +200,7 @@ Een paar opvallende zaken:
   
 ```apacheconf
     # Which user is used to do an initial BIND to the LDAP Provider (hardly ever anonymous access is granted)
-    AuthLDAPBindDN "cn=webuserldap,ou=users,ou=SamenFit,dc=samenfit,dc=local"
+    AuthLDAPBindDN "cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local"
     AuthLDAPBindPassword "exec:/bin/cat /root/website/passwd"
 ```
 Je zet het wachtwoord dus in een aparte file `/root/website/passwd`, die je goed beveiligt. Er zijn ook 
@@ -226,7 +265,7 @@ Herstart na afloop van deze commando's de Apache2 Webserver
 ## Testen en testen en testen en...
 Het werkend krijgen van deze configuratie is niet eenvoudig. Een paar tips:
   * Zet het loglevel van de LDAP-module op DEBUG: `loglevel error authnz_ldap:debug`
-  * monitor de logfile met `tail -f /var/log/apache2/error.samenfit.log` (de naam uit de configuratie file)
+  * monitor de logfile met `tail -f /var/log/apache2/error.mijnsite.log` (de naam uit de configuratie file)
   * als je een configuratie wijzigt, herstart dan de webserver : `sudo service apache2 restart`.
   dit zorgt er voor dat de cache van LDAP geleegd wordt en je weer met schone wachtwoorden begint.
   * als je Apache2 herstart, en je krijgt een foutmelding dan staat er een commando dat je kunt uitvoeren
