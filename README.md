@@ -18,6 +18,7 @@ het beste in onderstaande volgorde doorlopen worden:
   1. [Installatie OpenLDAP](./OpenLDAP/README.md)
   1. [Installatie Apache Directory Studio](./ApacheLDAPStudio/README.md)
   1. [Installatie Apache Webserver](./ApacheWebServer/README.md)
+  1. [Installatie PHP](./php/README.md)
   
 Uiteindelijk kun je onderstaande landschap inrichten:
 

@@ -153,9 +153,16 @@ We krijgen dan de volgende informatie:
 ![newUser05](images/ldap-new-user05.png)
 
 ![newUser07](images/ldap-new-user06.png)
-Je kunt eventueel nog de givenNaam (voornaam) invoeren. Je doet dit door met de rechtermuisknop in de lijst
-met attributen te klikken, en dan te kiezen voor `New Attribute`.  
 
+Je kunt eventueel nog de givenNaam (voornaam) invoeren. Je doet dit door met de rechtermuisknop in de lijst
+met attributen te klikken, en dan te kiezen voor `New Attribute`.
+
+## UserID Toekennen
+Voor de meeste situatie is het handig als je het attribuut UID gebruikt voor het toekennen van de daadwerkelijke
+gebruikersnaam. Maar dus een nieuw attribuut 'UID' en voer daar een gebruikersnaam aan toe. Let op dat het niet gebruikelijk
+is om daar spaties en bijzondere tekens in te verwerken! In het attribuut CN is dat meestal niet zo'n probleem.
+
+## Wachtwoord opvoeren
 ![newUser08](images/ldap-new-user07.png)
 
 Daarna voeren we het attribuut `userPassword` op. Na het aanmaken krijg je meteen een dialoogvenster om het wachtwoord in te voeren.
@@ -171,7 +178,7 @@ maar niet meer om er verbinding mee te maken. Zie [verderop](#wachtwoord) voor e
 
 
 ## Testen juist wachtwoord
-<A name="wachtwoord">
+<A name="wachtwoord"/>
 Als je een wachtwoord en encryptie hebt gekozen, test dan je wachtwoord. Dat gaat als volgt:
   1. Zoek de gebruiker op in de DIT
   2. dubbelklik op het attribuut `userPassword` om het dialoogvenster van het wachtwoord te openen
@@ -282,6 +289,8 @@ Tegelijkertijd moeten we er voor zorgen dat in diezelfde regel óók leesrechten
 A) Maak een bestand genaamd 'grants.ldif' met onderstaande inhoud:
   
 ```ldif  
+# First remove the existing Access control items
+# There are 3 existing; so remove them one-by-one 
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 delete: olcAccess
@@ -289,8 +298,37 @@ olcAccess: {2}
 
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
+delete: olcAccess
+olcAccess: {1}
+
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {0}
+
+# Now start adding the rules. First add the shadowLastChange for self
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
 add: olcAccess
-olcAccess: to dn.subtree="ou=samenfit,dc=samenfit,dc=local" by dn.base="cn=webuserldap,ou=users,ou=samenfit,dc=samenfit,dc=local" manage by * read
+olcAccess: to attrs=shadowLastChange by self write by * read
+
+# Add the rule that the user 'webuserldap' can manage passwords
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: to attrs=userPassword by dn.base="cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local" write by * read
+
+# Add the rule that some user that is logged on (bind) can change its own password
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: to attrs=userPassword by self write by anonymous auth by * none
+
+# Allow the user 'webuserldap' to manage the entries under the indicated base DN 
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: to dn.subtree="ou=mijnsite,dc=mijnsite,dc=local" by dn.base="cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local" manage by * read
 -
 add: olcAccess
 olcAccess: to * by * read
@@ -319,7 +357,35 @@ Vanaf nu is het mogelijk om met de user `webuserldap` de LDAP-objecten te manage
 
 Je kunt dit testen door in de LDAP-GUI de connection settings te veranderen naar de user `webuserldap`. 
 
-Zie ook het voorbeeld om met PHP een user aan te maken. 
+Zie ook het voorbeeld om met PHP een user aan te maken.
+
+
+# Oplossing van fouten met de security
+Soms heb je misschien een typefout gemaakt in de LDIF-file en moet je zaken corrigeren.
+ 
+ A) Maak in dat geval een bestand
+met de naam `revoke.ldif` met onderstaande inhoud:
+```ldif
+dn: olcDatabase={1}mdb,cn=config
+changetype: modify
+delete: olcAccess
+olcAccess: {1}
+```
+B) Voer vervolgens onderstaande commando uit als `root`.
+```bash
+ $ ldapmodify -Y EXTERNAL -H ldapi:/// -f revoke.ldif
+```
+
+C) Check met `slapcat -n 0` hoe de stand van zaken is. In wezen moet alleen de eerste regel overblijven uit de lijst met rechten:
+```bash
+ $ slapcat -n 0
+ [............snip................]
+ olcAccess: {0}to attrs=userPassword by self write by anonymous auth by * non
+  e
+```
+
+D) Herhaal commando in B) net zo vaak tot allen  `olcAccess: {0}` over is en voer het commando met de `grants.ldif` 
+opnieuw uit.
 
 # Referenties
   * [LDAP](https://ldap.com) 

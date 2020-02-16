@@ -131,7 +131,7 @@ zodat deze als commentaar wordt gezien. Het effect is dat deze configuratie al h
 bestand) afvangt en een standaard pagina serveert.
 
 ## Fouten bij herstarten webserver
-<A name="fouten" />
+<a name="fouten" />
  
 Soms krijg je fouten bij het starten/herladen van de configuratie van de webserver. Een typische foutmelding is dan:
 ```bash
@@ -171,7 +171,7 @@ Beide hebben hun voor en nadelen. Als je voor de eerste optie gaat, dan heeft de
 maar jij als gebruiker niet. 
 Als je voor de tweede optie gaat, dan heb jij wel rechten maar de webserver niet. 
 
-Om dit te repareren maak je gebruik van de commando's `chgrp`, `chown` en `chmod`. Tip: er is niet alleen een gebruiker `www-data`  
+Om dit te repareren maak je gebruik van de commando's `chgrp`, `chown` en `chmod`. Tip: er is niet alleen een gebruiker `www-data` 
 maar ook een group `www-data`.  Op deze manier kun je de eigenaar en de groep van een map / submappen eenvoudiger besturen.
 
 ## Advanced configuration
@@ -198,22 +198,87 @@ Een paar opvallende zaken:
   en wachtwoord nodig. Om te voorkomen dat je een plain-tekst wachtwoord moet opnemen in configuratie 
   gebruik je onderstaande instellingen:
   
-```apacheconf
+```apacheconfig
+
+LDAPCacheTTL 10
+LDAPOpCacheTTL 10
+
+<VirtualHost  *:80>
+  DocumentRoot /home/martin/websites/mijnsite/
+  ServerName mijnsite.local
+  
+  ErrorLog "/var/log/apache2/error.mijnsite.log"
+  CustomLog "/var/log/apache2/access.mijnsite.log" common
+  
+  #https://httpd.apache.org/docs/2.4/mod/core.html#loglevel
+  loglevel error authnz_ldap:debug
+
+
+  <Directory "/home/martin/websites/mijnsite">
+     Require all granted
+  </Directory>
+
+  <Directory "/home/martin/websites/mijnsite/intranet">
+    # Basic Authentication config
+	
+    # Indicate Basic Authentication (this will trigger a popup in the browser)
+    AuthType Basic
+    
+    # The popup will indicate an environment . The AuthName will provide the description of the environment
+    AuthName "Beheeromgeving van Mijn site"
+    
+    # which provider will support the BasicAuth protocol? ==> LDAP
+    AuthBasicProvider ldap
+
+    # What search query is used : domain / baseDN ? attribute = uid ? sub = search substree from baseDB ? filter (only objects of class iNetOrgPerson)
+    AuthLDAPURL "ldap://localhost:389/ou=users,ou=mijnsite,dc=mijnsite,dc=local?uid?sub?(objectClass=iNetOrgPerson)" NONE
+
     # Which user is used to do an initial BIND to the LDAP Provider (hardly ever anonymous access is granted)
     AuthLDAPBindDN "cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local"
     AuthLDAPBindPassword "exec:/bin/cat /root/website/passwd"
+
+    # Which user-attribute contains the group-memberlist?
+    AuthLDAPGroupAttribute uniqueMember   
+    
+    # are the groups in the group-member list DistinguishedNames (=DN)? 
+    AuthLDAPGroupAttributeIsDN on
+
+    # Finally, now everything is in place, now we can use the REQUIRE instruction to demand that a certain group must be used. this implies a valid user!
+    # give the correct group where a user should be a member of
+    # If AuthLDAPGroupAttributeIsDN=ON, then a full distinguishedName should be supplied
+    Require ldap-group cn=website,ou=groups,ou=mijnsite,dc=mijnsite,dc=local
+
+  </Directory>
+
+  # Following setting will create a default web-page containing information about the server. This page can be obtained
+  # using e.g. http://mijnsite.local/server/cache-info
+  <Location "/server/cache-info">
+    SetHandler ldap-status
+  </Location>
+  
+</VirtualHost>
+
+
+
 ```
 Je zet het wachtwoord dus in een aparte file `/root/website/passwd`, die je goed beveiligt. Er zijn ook 
 andere veiligere methodes om zo'n wachtwoord kenbaar te maken op deze manier. Kijk 
 [hier](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapurl) voor meer informatie.   
 
+**Let op**: het is momenteel nog niet duidelijk hoe 'plain text' wachtwoorden voorkomen kunnen worden in deze situatie. 
+Daarom moet de gebruiker 'webuserldap' een plain-text wachtwoord hebben zodat deze in de Apache Config en de PHP-code 
+gebruikt kunnen worden.
+
 **Let op**: er wordt bij elke inlogpoging van een gebruiker 2x toegang gevraagd richting de LDAP-service:
-  1. De webserver heeft toegang nodig om de gebruiker te zoeken
+  1. De webserver heeft toegang nodig om de gebruiker te zoeken (in je config staat deze bij `AuthLDAPBindDN`)
   2. nadat de gebruiker is gevonden, wordt gepoogd een `ldap bind` te doen met de gevonden gebruiker en het wachtwoord
   dat de gebruiker heeft ingevoerd.
   
 In de logfiles is dat verschil niet altijd duidelijk. Als je een foutmelding krijgt dat de gebruiker niet gevonden kan
-worden, heeft dat vaak ook met toegang van **stap 1** te maken!
+worden, heeft dat vaak ook met toegang van **stap 1** te maken! Je kunt dan onderstaande foutmelding krijgen:
+```log
+  AH01695: auth_ldap authenticate: user martin authentication failed; URI /intranet/ [LDAP: ldap_simple_bind() failed][Server is unwilling to perform], referer: http://secrisk-dev.local/
+```
 
 ## Laden van modules voor Apache LDAP
 Om te zorgen dat LDAP ook daadwerkelijk bruikbaar is voor Apache2, moet je deze aanzetten. Dat doe je met het commando 
@@ -270,7 +335,9 @@ Het werkend krijgen van deze configuratie is niet eenvoudig. Een paar tips:
   dit zorgt er voor dat de cache van LDAP geleegd wordt en je weer met schone wachtwoorden begint.
   * als je Apache2 herstart, en je krijgt een foutmelding dan staat er een commando dat je kunt uitvoeren
   om problemen te onderzoeken. Maak daar gebruik van en lees zorgvuldig de output van dat commando! (zie ook [hier](./#fouten))
-  * test eventueel je configuratie van Apache met `apache2 -S `
+  * test eventueel je configuratie van Apache met `apache2 -S`. Zie verderop 
+  
+  
   
 Veel voorkomende problemen:
   * encryptie van wachtwoorden is onjuist
@@ -278,7 +345,43 @@ Veel voorkomende problemen:
   * locaties van bestanden / mappen deugen niet (DocumentRoot)
 
 
-# Referenties <a name="referenties">
+# Testen van je Apache Configuratie
+Het kan handig zijn om de configuratie van je Apache Virtual Config te kunnen laten controleren door Apache. Daarvoor kun je
+het commando `apache2 -S`  gebruiken. Echter, het komt vaak voor dat je dan foutmeldingen krijgt die niks met jouw 
+configuratie te maken hebben, maar met de globale configuratie van Apache2: bepaalde globale variabelen zijn niet 
+gezet als je dit commando vanaf de commando-regel opstart. 
+
+```bash
+[Sat Feb 15 16:26:30.733272 2020] [core:warn] [pid 14639] AH00111: Config variable ${APACHE_RUN_DIR} is not defined
+apache2: Syntax error on line 80 of /etc/apache2/apache2.conf: DefaultRuntimeDir must be a valid directory, 
+absolute or relative to ServerRoot
+```
+
+Dit kun je fixen met het runnen van een script die deze
+variabelen wel goed zet: `source envvars`:
+```bash
+root@risksec:/root# cd /etc/apache2/
+root@risksec:/root# source envvars
+root@risksec:/root# apache2 -S
+root@risksec:/root# apache2 -S
+AH00112: Warning: DocumentRoot [/home/martin/mijnsite/] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+VirtualHost configuration:
+*:80                   mijnsite.local (/etc/apache2/sites-enabled/mijnsite.conf:1)
+ServerRoot: "/etc/apache2"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/var/log/apache2/error.log"
+Mutex default: dir="/var/run/apache2/" mechanism=default 
+Mutex watchdog-callback: using_defaults
+PidFile: "/var/run/apache2/apache2.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="www-data" id=33
+Group: name="www-data" id=33
+root@risksec:/root# 
+```
+
+# Referenties <a name="referenties"/>
   * [Apache Virtual Hosts config](https://httpd.apache.org/docs/2.4/vhosts/examples.html)
   * [Linux: How to edit hosts file](https://manpages.ubuntu.com/manpages/bionic/en/man5/hosts.5.html)
   * [Apache 2.4 Core](https://httpd.apache.org/docs/2.4/mod/core.html)
