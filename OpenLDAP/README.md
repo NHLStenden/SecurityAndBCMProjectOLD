@@ -286,61 +286,14 @@ Het gaat om `olcAccess: {2}to * by * read`. Deze zorgt voor leesrechten `read` o
 regels een voorrangsregeling kennen, moeten we die regel `{2}` vervangen door iets anders. Namelijk: geef de user `webuserldap` alle rechten (`manage`). 
 Tegelijkertijd moeten we er voor zorgen dat in diezelfde regel óók leesrechten hersteld worden voor alle gebruikers op alle objecten. 
 
-A) Maak een bestand genaamd 'grants.ldif' met onderstaande inhoud:
-  
-```ldif  
-# First remove the existing Access control items
-# There are 3 existing; so remove them one-by-one 
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-delete: olcAccess
-olcAccess: {2}
 
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-delete: olcAccess
-olcAccess: {1}
+A) Voer vervolgens onderstaande commando uit, ingelogd als  `root`. Je kunt eenvoudig wisselen naar de root-gebruiker via `sudo -i` (-i staat voor interactieve shell).
 
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-delete: olcAccess
-olcAccess: {0}
-
-# Now start adding the rules. First add the shadowLastChange for self
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-add: olcAccess
-olcAccess: to attrs=shadowLastChange by self write by * read
-
-# Add the rule that the user 'webuserldap' can manage passwords
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-add: olcAccess
-olcAccess: to attrs=userPassword by dn.base="cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local" write by * read
-
-# Add the rule that some user that is logged on (bind) can change its own password
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-add: olcAccess
-olcAccess: to attrs=userPassword by self write by anonymous auth by * none
-
-# Allow the user 'webuserldap' to manage the entries under the indicated base DN 
-dn: olcDatabase={1}mdb,cn=config
-changetype: modify
-add: olcAccess
-olcAccess: to dn.subtree="ou=mijnsite,dc=mijnsite,dc=local" by dn.base="cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local" manage by * read
--
-add: olcAccess
-olcAccess: to * by * read
--
-```
-
-B) Voer vervolgens onderstaande commando uit als `root`.
 ```bash
- $ ldapmodify -Y EXTERNAL -H ldapi:/// -f grants.ldif
+ $ . ./execute-grants.sh
 ```
 
-C) Controleer de nieuwe situatie:
+B) Controleer de nieuwe situatie:
 ```bash
  $ slapcat -n 0
  [............snip................]
