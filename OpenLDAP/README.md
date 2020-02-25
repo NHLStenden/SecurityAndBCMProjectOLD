@@ -4,7 +4,7 @@ autoriseren voor bijvoorbeeld onze webserver.
 
 ## Installatie Apache & OpenLDAP  
 ```bash
-$ sudo apt install slapd
+$ sudo apt install slapd ldap-utils
 ```
 Accepteer eventuele gesuggereerde pakketten en start de installatie. 
 
