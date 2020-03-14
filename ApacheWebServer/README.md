@@ -265,9 +265,9 @@ Je zet het wachtwoord dus in een aparte file `/root/website/passwd`, die je goed
 andere veiligere methodes om zo'n wachtwoord kenbaar te maken op deze manier. Kijk 
 [hier](https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html#authldapurl) voor meer informatie.   
 
-**Let op**: In het bestand `/root/website/passwd` staat het wachtwoord in leesbare tekst, ook al heb je voor de gebruiker in de
-LDAP-registratie een one-way-hash gebruikt (MCrypt). Dit leesbare wachtwoord gaat dan ook in leesbare tekst over de lijn. Echter,
-omdat de LDAP-service en de Apache2-service op dezelfde machine draaien is dit minder ernstig voor deze onderwijssituatie.
+**Let op**: het is momenteel nog niet duidelijk hoe 'plain text' wachtwoorden voorkomen kunnen worden in deze situatie. 
+Daarom moet de gebruiker 'webuserldap' een plain-text wachtwoord hebben zodat deze in de Apache Config en de PHP-code 
+gebruikt kunnen worden.
 
 **Let op**: er wordt bij elke inlogpoging van een gebruiker 2x toegang gevraagd richting de LDAP-service:
   1. De webserver heeft toegang nodig om de gebruiker te zoeken (in je config staat deze bij `AuthLDAPBindDN`)
