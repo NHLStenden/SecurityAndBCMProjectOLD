@@ -22,13 +22,36 @@ We gebruiken de volgende middelen op je laptop
 Eerst gaan we echter kijken naar de instellingen van het netwerk. 
 
 ## Netwerkinstellingen
+Bij de instellingen van het netwerk van je VM kun je vele opties kiezen. Kijk voor een uitgebreide toelichting
+bij [Oracle Virtual Box](https://www.virtualbox.org/manual/ch06.html). De meest gebruikte staan hier onder:
+  1. NAT : Network Address Translation
+  1. Network Bridge Adapter
+  1. Host-Only Adapter
+  
+Op de website van Oracle staat onderstaande afbeelding.
+![General Networking](./images/network-general-01.png)  
+
+Als je in je VM alleen een internet verbinding nodig hebt dan is de eerste oplossing (`NAT`) prima bruikbaar. Echter
+het delen van bestanden met je Windows/MacOS/Linux-host is een probleem.
+
+Als je thuis werkt en je router staat toe dat op jouw host-OS een VM een IP-adres krijgt, dan kun je gebruik
+maken van `Network Bridge Adapter`. Je VM krijgt dan een IP-adres dat alle machines in het netwerk kunnen zien.
+In wezen wordt je VM dan een server in je netwerk. Op deze manier kunnen andere apparaten (Laptop, mobiele telefoon)
+gebruik maken van alle diensten (LDAP, Samba, Webserver etc) die op jouw server draaien. 
+
+Als je bijvoorbeeld op school werkt, dan krijgt je VM van de WiFi/Router op school géén IP-adres. Als je niet 
+alleen bestanden wilt downloaden of pakketten wilt bijwerken (`sudo apt update`), dan moet je een Host-Only
+adapter gebruiken.
+
+Het is een beetje proberen om te kijken wat voor jou werkt. Begin met scenario 1 als dat werkt. Wil je verder
+dan kies je voor één van de andere scenario's.  
+
 Als we kijken in welke situatie de VM zich bevindt qua netwerk dan zijn er grofweg twee situaties:
   1. de VM krijgt wel een IP-adres van de DHCP-server in het netwerk
   1. de VM krijgt geen IP-adres van de DHCP-server in het netwerk
   
 In welke situatie je zit is lastig te bepalen. Je kunt dit uitproberen door te testen of je in situatie 1 
 zit. Lukt dat niet, dan zit je in situatie 2.
-
 
 ## Port Forwarding
 Je kunt in een terminal kijken wat voor IP-adres je hebt gekregen. 
@@ -50,7 +73,7 @@ martin@risksec:~$ ip addr
 ```
 De eerste kun je negeren: dat is de localhost loopback ([uitleg](https://askubuntu.com/questions/247625/what-is-the-loopback-device-and-how-do-i-use-it)).
 
-De tweede bevat het IP-adres `10.0.2.15`. Dit lokale adres is niet bruikbaar op je eigen laptop/PC 
+De tweede bevat het IP-adres `10.0.2.15` (zie de regel die begint met `inet`). Dit lokale adres is niet bruikbaar op je eigen laptop/PC 
 omdat die 99,9% zeker in een andere IP-range zit. Echter, het handige is dat VirtualBox
 je daar wel mee kan helpen. De VirtualBox software kan poorten doorsturen van je PC naar
 de VM. Dit doe je door in de configuratie van je netwerkadapter de volgende instellingen
@@ -128,7 +151,6 @@ Vervolgens kun je bepalen of VirtualBox ook DHCP moet faciliteren. Dit is niet p
 
 ![Manage Hosts](./images/network-settings-04.png)
 
-
 ## VM instellen om de nieuwe Host-Only Adapter te gebruiken.
 De volgende stap is dat je bij de virtuele machine moet aangeven dat ie daadwerkelijk deze nieuwe instellingen 
 moet gaan gebruiken. Open de instellingen van je VM en open het tabblad 'Netwerk'. Kies bij 'Adapter 1' (tabblad bovenin)
@@ -148,6 +170,8 @@ met het commando `dhclient` de nieuwe instellingen activeren. Als dat niet werkt
 ```
 Soms leidt dit tot meerdere foutmeldingen die bijvoorbeeld veroorzaakt worden doordat je 
 wellicht meerdere netwerkadapters geactiveerd hebt.
+
+Check weer met het commando `ip addr` of je een bruikbaar IP-adres hebt gekregen. 
 
 ## Meerdere netwerkkaarten
 Je kunt eventueel een tweede netwerkkaart aanzetten zodat je altijd, ongeacht de situatie 
@@ -210,11 +234,21 @@ Om de toegang te regelen gebruiken we de software "Apache Directory Explorer". Z
 en opzetten van de verbinding [deze tutorial](../ApacheLDAPStudio/README.md).
 
 ## Webserver toegang
-
+<Work in progress>
 
 ## SSH toegang
-
+<Work in progress>
 
 ## Bestanden benaderen op de VM
+Het benaderen van bestanden op je VM is eigenlijk de lastigste: je kunt je bestandbeheer applicatie 
+(MacOS Finder, Windows Verkenner) vaak niet instrueren om dat over een andere poort te doen. Dat betekent
+ dat je dus eigenlijk altijd de standaard poort moet gebruiken (445). 
 
+Dit impliceert dat je dus óf een IP-adres van je echte router moet hebben (Network Bridge Adapter) óf 
+een IP-adres via de Host-Only Adapter.
 
+Daarna kun je bijvoorbeeld in Windows je machine als volgt benaderen:
+
+`\\192.168.203.3\martin`
+
+ 
