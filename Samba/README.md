@@ -1,6 +1,6 @@
 # Installatie Samba - delen van bestanden
 Als je bestanden die in je VM zitten wilt gebruiken op je laptop/PC dan moet je Samba gebruiken. 
-Samba is een naam die gebaseerd is het SMB-protocol: Server Message Block. Dit protocol loopt over poort
+Samba is een naam die gebaseerd is het SMB-protocol: *Server Message Block*. Dit protocol loopt over poort
 445 en is eenvoudig te installeren via de command-line in Linux.
 
 Als de software eenmaal geinstalleerd is moet je nog wel wat kleine zaken regelen in de welbekende .conf-bestanden.
@@ -35,6 +35,7 @@ vervolgens de instellingen met `testparm -L`. Je kunt hiermee alle instellingen 
 .........snipped............
 
 ```
+
 ## Gebruikers toestaan in te loggen
 Als een gebruiker toegang wil hebben tot Samba, dan moet er voor de gebruiker een apart wachtwoord opgegeven worden.
 Dat doe je met het commando `smbpassword`. In onderstaande commando wordt voor de gebruiker `martin` een nieuw 
@@ -76,9 +77,33 @@ waarschijnlijk niet leesbaar zijn voor de webserver Apache2. Dit proces maakt na
       1. derde set `---` anderen (zijnde niet de eigenaar en groep) hebben geen rechten
 
 
-Vergeet niet je instellingen te controleren!
+Vergeet niet je instellingen te activeren & controleren!
 ```bash
   root@risksec:~# service smbd restart
   root@risksec:~# testparm -L
-
 ```
+
+## Inloggen op de gedeelde mappen
+In Windows is het openen van bestanden op een andere netwerklocatie eenvoudig te regelen via de verkenner. Aangezien
+jouw VM zich nu waarschijnlijk als een server gedraagt (zie ook [hier](../Netwerk/README.md)) kun je eenvoudig via
+het IP-adres van je server deze bestanden openen. 
+
+Typ in de adresbalk van je Windows Verkenner bijvoorbeeld onderstaande:
+
+`\\192.168.233.203\martin` 
+
+om de gebruikers HOME-directory van gebruiker `martin` te openen op IP-adres `192.168.233.203`. Je kunt eventueel
+een netwerkdrive mappen naar zo´n locatie, zodat je bijvoorbeeld via `H:` deze bestanden makkelijk kunt gebruiken.
+
+Op Linux kun je vaak verbinding maken via onderstaande URL:
+
+`smb://192.168.233.203/martin/`
+
+of door deze op te nemen in het bestand `/etc/fstab`. Zie de referenties onderaan voor meer informatie hierover. 
+
+### Referenties
+  * [Samba op Wikipedia](https://nl.wikipedia.org/wiki/Samba_(software))
+  * [SMB / CIFS Protocol](https://nl.wikipedia.org/wiki/Server_Message_Block)
+  * [Ubuntu Samba Tutorial](https://ubuntu.com/tutorials/install-and-configure-samba#1-overview)
+  * [Samba organisation](https://www.samba.org/)
+  * [Linux Mount Windows share permanently](https://wiki.ubuntu.com/MountWindowsSharesPermanently)
