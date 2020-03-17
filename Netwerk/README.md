@@ -79,7 +79,7 @@ je daar wel mee kan helpen. De VirtualBox software kan poorten doorsturen van je
 de VM. Dit doe je door in de configuratie van je netwerkadapter de volgende instellingen
 te kiezen:
 
-![port forwarding](./images/network-settings-13.png) 
+![Network-NAT](./images/network-settings-13.png) 
 
 Klik vervolgens op de button 'Port Forwarding' ([uitleg](https://www.howtogeek.com/122641/how-to-forward-ports-to-a-virtual-machine-and-use-it-as-a-server/)).
  
@@ -179,7 +179,7 @@ waar je in zit, een werkende situatie krijgt. Dit regel je eenvoudig in de netwe
 van je VM. Let op: dit lukt niet als je VM al draait; deze zul je dan eerst netjes moeten
 afsluiten.
 
-![Manage Hosts](./images/network-settings-11.png)
+![Multiple](./images/network-settings-11.png)
 
 Bij het opvragen van de nieuwe configuratie ziet er dan bijvoorbeeld als volgt uit:
 (let op de regels die beginnen met `inet`). Je hebt nu 3 IP-adressen:
@@ -215,8 +215,6 @@ martin@risksec:~$ ip addr
     inet6 fe80::a00:27ff:fe91:d7d4/64 scope link
        valid_lft forever preferred_lft forever
 martin@risksec:~$
-
-
 ```
 
 #Diensten benaderen
@@ -231,24 +229,115 @@ Normaal gesproken heb je drie zaken nodig om verbinding te maken
 
 ## LDAP toegang 
 Om de toegang te regelen gebruiken we de software "Apache Directory Explorer". Zie voor installatie
-en opzetten van de verbinding [deze tutorial](../ApacheLDAPStudio/README.md).
+en opzetten van de verbinding [deze tutorial](../ApacheLDAPStudio/README.md). 
+
+Normaal gesproken is er op jouw machine (`localhost`) geen LDAP-protocol software geinstalleerd die luistert op 
+poort 389. Je kunt dus veilig verbinding maken met óf `localhost:389` of `192.168.233.203:389` (of welk IP-adres)
+je maar gebruikt. 
 
 ## Webserver toegang
-<Work in progress>
+Er is een kleine kans dat jouw Windows/Linux/MacOS installatie misschien al een webserver heeft draaien op poort 80 of
+dat je OS deze poort standaard blokkeert.
+Als je gebruik maakt van `localhost` met port-forwarding (in plaats van een echt IP-adres via router of 
+Host-Only Adapter) dan zul je dus waarschijnlijk een andere poort dan 80 moeten gebruiken. Meestal kiezen we dan 
+voor poort 8080.
+
+In de hosts-file van je host-OS (Windows/MacOS/Linux) moet je dan wel de juiste aanpassing doen. Typisch staat deze 
+hosts file op onderstaande locaties:
+   1. Windows: `c:\windows\system32\drivers\etc\hosts`
+   2. Linux: `/etc/hosts`
+
+Let op dat je vaak admin/root rechten nodig hebt om dit bestand aan te passen.
+
+Deze aanpassing is nodig om te zorgen dat jouw VM en Apache2 die daar op draait weet welke configuratie gebruikt
+moet worden.
+
+### Netwerk via NAT
+Maak een vermelding in je hosts-file op onderstaande manier. 
+```text
+  127.0.0.1 mijnwebsite.local     
+```
+Open vervolgens jouw URL met een vermelding van poort 8080:
+
+`http://mijnwebsite.local:8080`
+
+### Network bridged of Host-Only Adapter
+Als je een Network bridged of Host-Only Adapter configuratie gebruikt, hoef je geen port-forwarding te gebruiken. 
+Je kunt dan het echte IP-adres gebruiken, en hoeft dan geen poort 8080 te gebruiken.
+
+```text
+  192.168.233.203 mijnwebsite.local     
+```
+
+Open vervolgens jouw URL:
+
+`http://mijnwebsite.local`
 
 ## SSH toegang
-<Work in progress>
+Er is een kleine kans dat jouw Windows/Linux/MacOS installatie misschien al een SSH-server heeft draaien op poort 22. 
+
+### Netwerk via NAT
+Als je gebruik maakt van `localhost` met port-forwarding (in plaats van een echt IP-adres via router of 
+Host-Only Adapter) dan zul je dus waarschijnlijk een andere poort dan 22 moeten gebruiken. Meestal kiezen we dan 
+voor poort 2222.
+
+Je logt dan in via onderstaande commando (`-p` geeft aan dat je een andere poort wilt aanduiden dan de standaard 
+poort 22). Bijvoorbeeld via Windows 10 command line.
+
+```text 
+  c:\users\martin> ssh martin@localhost -p 2222
+```
+
+### Network bridged of Host-Only Adapter
+Als je een Network bridged of Host-Only Adapter configuratie gebruikt, hoef je geen port-forwarding te gebruiken. 
+Let op dat je in onderstaande dus een ander IP-adres gebruikt!
+
+```text 
+  c:\users\martin> ssh martin@192.168.233.203
+```
+
+
+**Let op**: standaard staat SSH meestal niet toe dat je met een `root`-account kunt inloggen. Je kunt dit oplossen door
+1. de configuratie van SSH-server te veranderen
+2. een aparte user te gebruiken en deze `sudo`-rechten te geven; in de standaard setup van Debian moet je zo'n extra
+gebruiker al aanmaken. 
+
+Met onderstaande commando (ingelogd als `root`) 
+```bash
+root@risksec:~# addgroup martin sudo
+```
+Let op: groepsrechten worden alleen geactiveerd na inloggen. Mogelijk moet je dus opnieuw inloggen als gebruiker 
+`martin`.
+
+Onderstaande als gebruiker `martin`:
+```bash
+martin@risksec:~$ whoami
+martin
+martin@risksec:~$ sudo -i
+root@risksec:~# whoami
+root
+root@risksec:~# apt update
+......
+root@risksec:~# exit
+martin@risksec:~$ whoami
+martin
+martin@risksec:~$ sudo apt update 
+.......
+```
+
+Deze gebruiker (`martin` in bovenstaande voorbeeld) krijgt zo de mogelijk om tijdelijk 'elevated rights' te krijgen 
+door `sudo` voor een commando te zetten, of tijdelijk `root` te zijn door `sudo -i` te geruiken.
 
 ## Bestanden benaderen op de VM
 Het benaderen van bestanden op je VM is eigenlijk de lastigste: je kunt je bestandbeheer applicatie 
 (MacOS Finder, Windows Verkenner) vaak niet instrueren om dat over een andere poort te doen. Dat betekent
  dat je dus eigenlijk altijd de standaard poort moet gebruiken (445). 
 
-Dit impliceert dat je dus óf een IP-adres van je echte router moet hebben (Network Bridge Adapter) óf 
-een IP-adres via de Host-Only Adapter.
+Dit impliceert dat je dus óf een IP-adres van je echte router moet hebben (**Network Bridge Adapter**) óf 
+een IP-adres via de **Host-Only Adapter**.
 
 Daarna kun je bijvoorbeeld in Windows je machine als volgt benaderen:
 
 `\\192.168.203.3\martin`
 
- 
+Zie voor een uitgebreide uitleg de [Samba](../Samba/README.md) uitleg.  
