@@ -1,7 +1,7 @@
 # Installatie van Debian binnen Virtual Box (v6)
 
 Download een image bestand van Debian Net Installation :
-[Debian Website](https://www.debian.org/CD/netinst/).
+[Debian Website](https://www.debian.org/CD/netinst/). De huidige versie is *10.6.0*. 
 
 Kies het juiste image voor jouw architectuur (vermoedelijk AMD64).
 
