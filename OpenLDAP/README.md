@@ -1,6 +1,6 @@
 # OpenLDAP installatie en configuratie.
 Het OpenLDAP product geeft ons de mogelijkheid om gebruikers veilig te administreren. Deze gebruikers kunnen we dan 
-autoriseren voor bijvoorbeeld onze webserver. 
+autoriseren voor bijvoorbeeld onze webserver. We gebruiken hier (minimaal) versie 2.4. 
 
 ## Installatie Apache & OpenLDAP  
 ```bash
