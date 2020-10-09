@@ -1,7 +1,8 @@
 # Installatie van Debian binnen Virtual Box (v6)
 
 Download een image bestand van Debian Net Installation :
-[Debian Website](https://www.debian.org/CD/netinst/). De huidige versie is *10.6.0*. 
+[Debian Website](https://www.debian.org/CD/netinst/). De huidige versie ten tijde van dit schrijven is *10.6.0*. Hoewel
+er steeds nieuwe versies uitgegeven worden is de procedure hetzelfde. 
 
 Kies het juiste image voor jouw architectuur (vermoedelijk AMD64).
 
@@ -96,15 +97,17 @@ op de groene 'Start'-knop om de machine te starten.
 ![VirtualBox-001](./images/VirtualBox-10.png)
 
 Na het opstarten verschijnt kort het startscherm van Virtual Box. 
-![DebianInstall-001](./images/debian-install-001.png)
+
 
 Als de ISO/CD goed start krijg je een keuze of je de setup van Debian via een grafische interface wilt. Dit verdient
 vaak wel de voorkeur zodat je met de muis en toetsenbord kunt werken.
 
-![DebianInstall-002](./images/debian-install-002.png)
+![DebianInstall-001](./images/debian-install-001.png)
 
 Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
+![DebianInstall-002](./images/debian-install-002.png)
+ 
 ![DebianInstall-003](./images/debian-install-003.png)
 
 ![DebianInstall-004](./images/debian-install-004.png)
@@ -179,10 +182,18 @@ Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
 ![DebianInstall-001](./images/debian-install-039.png)
 
+Nu wordt je VM daadwerkelijk voor de eerste keer opgestart.
+
 ![DebianInstall-001](./images/debian-install-040.png)
 
+Eerst krijg je het schermv an GRUB (de bootloader) te zien. Je kunt hier op <enter> drukken om door te gaan.  
 ![DebianInstall-001](./images/debian-install-041.png)
 
-![DebianInstall-001](./images/debian-install-042.png)
-
+Daarna start het boot-proces van de VM daadwerkelijk.
 ![DebianInstall-001](./images/debian-install-043.png)
+
+Na verloop van tijd kun je inloggen. Login met `root` en je zelfgekozen wachtwoord.
+![DebianInstall-001](./images/debian-install-044.png)
+
+Na het inloggen krijg je wat informatie over de gekozen distributie / versie.
+![DebianInstall-001](./images/debian-startup-004.png)
