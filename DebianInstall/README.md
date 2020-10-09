@@ -107,6 +107,8 @@ vaak wel de voorkeur zodat je met de muis en toetsenbord kunt werken.
 Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
 ![DebianInstall-002](./images/debian-install-002.png)
+
+Daarna stel je in een aantal stappen de regio in waar je je bevindt. Kies voor Europae/Netherlands.
  
 ![DebianInstall-003](./images/debian-install-003.png)
 
@@ -114,31 +116,48 @@ Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
 ![DebianInstall-005](./images/debian-install-005.png)
 
+Vervolgens kies je instellingen voor bijvoorbeeld je toetsenbordindeling.
 ![DebianInstall-006](./images/debian-install-006.png)
 
 ![DebianInstall-007](./images/debian-install-007.png)
 
+Vervolgens begint deel 1 van de installatie.
 ![DebianInstall-008](./images/debian-install-008.png)
 
+De volgende stap is het detecteren van hardware zoals de klok en je netwerkkaart.
 ![DebianInstall-009](./images/debian-install-009.png)
 
+Het netwerk wordt automatisch ingesteld op DHCP: het verkrijgen van een automatisch adres.
 ![DebianInstall-010](./images/debian-install-010.png)
 
+Nu moet je de naam van de virtuele machine instellen. Dit is onder andere de naam die bijv. in het
+netwerk gebruikt kan worden.
 ![DebianInstall-011](./images/debian-install-011.png)
 
-![DebianInstall-012](./images/debian-install-012.png)
-
+Het domein van je netwerk mag je leeglaten.
 ![DebianInstall-013](./images/debian-install-013.png)
 
+Vervolgens moet je gebruikers aanmaken. Stap 1 is het opvoeren van een wachtwoord voor de 
+`root` gebruiker. Tip: schrijf dit wachtwoord op! Als je dit kwijtraakt kun je niks meer met je VM beginnen.
 ![DebianInstall-001](./images/debian-install-014.png)
 
+Voer daarna een naam in voor de tweede gebruiker. Je mag een volledige naam invoeren. Ik gebruik
+hier alleen mijn voornaam.
 ![DebianInstall-001](./images/debian-install-015.png)
 
+Van de volledige naam wordt vervolgens een gebruikersnaam afgeleid die je hier nog kunt veranderen.
 ![DebianInstall-001](./images/debian-install-016.png)
 
+Voer vervolgens voor deze gebruiker ook een wachtwoord in. 
 ![DebianInstall-001](./images/debian-install-017.png)
 
+De installatie gaat verder met deel 2: het configureren van de schijf. Deze wordt het beste
+ingesteld op één partitie voor alle onderdelen.
 ![DebianInstall-001](./images/debian-install-018.png)
+
+Let op: het gaat hier om een virtuele schijf! Dus je maakt geen wijzigingen op je echte harddisk van 
+je computer. De 'schijf' die de installatieprocedure hier ziet is in wezen één groot bestand op je
+harddisk. Virtual Box zorgt er voor dat deze door Debian als een gewone schijf wordt gezien.
 
 ![DebianInstall-001](./images/debian-install-019.png)
 
@@ -148,6 +167,8 @@ Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
 ![DebianInstall-001](./images/debian-install-022.png)
 
+Kies hier voor 'YES' om de wijzigingen door te voeren en verder te gaan. 
+
 ![DebianInstall-001](./images/debian-install-023.png)
 
 ![DebianInstall-001](./images/debian-install-024.png)
@@ -156,28 +177,48 @@ Je bent hier vrij in het kiezen van een taal. In dit geval kies ik voor Engels.
 
 ![DebianInstall-001](./images/debian-install-026.png)
 
+De packagemanager wil nu aanvullende pakketten ophalen en vraagt je om een locatie te kiezen
+die dichtbij is, zodat het downloaden sneller gaat.
 ![DebianInstall-001](./images/debian-install-027.png)
 
+Je kunt ook kiezen voor bijvoorbeeld de Universiteit van Twente (debian.snt.utwente.nl).
 ![DebianInstall-001](./images/debian-install-028.png)
 
+Mocht je achter een proxy zitten dan kun je deze hier configureren.
 ![DebianInstall-001](./images/debian-install-029.png)
 
+Nu wordt dan daadwerkelijk de rest van het OS geinstalleerd.
 ![DebianInstall-001](./images/debian-install-030.png)
 
+Maak hier je eigen keuze.
 ![DebianInstall-001](./images/debian-install-031.png)
 
+De installatie start...
 ![DebianInstall-001](./images/debian-install-032.png)
 
+Na de basisinstallatie kunnen veel gebruikte pakketten geselecteerd worden. Voor een headless server gebruik
+je geen desktop omgeving, dus zorg dat het bovenste pakket en de pakketten die met `...` beginnen
+niet geselecteerd worden.
+
+Zorg dat SSH *wel* aan staat! Dan kun je je server straks via SSH in ieder geval ook benaderen. 
 ![DebianInstall-001](./images/debian-install-033.png)
 
 ![DebianInstall-001](./images/debian-install-034.png)
 
+Na het installatieproces moet de boot-loader geinstalleerd worden. Deze zorgt er voor dat Virtual Box
+je OS daadwerkelijk kan vinden en opstarten.
 ![DebianInstall-001](./images/debian-install-035.png)
 
+Installeer op de enige schijf. 
 ![DebianInstall-001](./images/debian-install-036.png)
 
 ![DebianInstall-001](./images/debian-install-037.png)
 
+De installatie is klaar en we kunnen opnieuw opstarten.
+
+LET OP! Als je de configuratie van de 'CD' met het installatie bestand op een andere manier hebt gekoppeld
+dan kan het zijn dat je installatie proces opnieuw begint. In dat geval ga je in de configuratie
+van je VM in Virtual box eerst je CD ontkoppelen voordat je opnieuw je VM opstart.
 ![DebianInstall-001](./images/debian-install-038.png)
 
 ![DebianInstall-001](./images/debian-install-039.png)
