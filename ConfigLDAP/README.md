@@ -296,10 +296,44 @@ Deze heb je als het goed is opgehaald via een `git clone` commando (zie [hier](.
 A) Voer vervolgens onderstaande commando uit, ingelogd als  `root`. Je kunt eenvoudig wisselen naar de 
 root-gebruiker via `sudo -i` (-i staat voor interactieve shell).
 
+Let op: deze procedure maakt gebruik van een bestand genaamd `grants.ldif`. Daar zitten echter instellingen in die mogelijk
+bij jouw LDAP-configuratie anders zijn. 
+
+In mijn voorbeeldbestand wordt gebruik gemaakt van `ou=mijnsite,dc=mijnsite,dc=local`. Als dat bij jou anders is zul 
+je dit moeten aanpassen voordat je verder gaat. Je kunt dat doen met de editor `nano` (zie handleiding onderaan 
+deze pagina). Bijvoorbeeld:
+
+```ldif
+olcAccess: to attrs=userPassword by dn.base="cn=webuserldap,ou=users,ou=mijnsite,dc=mijnsite,dc=local" write by * read
+```
+
+Zoek en vervang dus al deze waarden `ou=mijnsite,dc=mijnsite,dc=local` door je eigen waarden. In mijn geval heb ik
+ze vervangen door `ou=samenfit,dc=samenfit,dc=local`
+
 ```bash
 martin@debian:~$ sudo -i
 [sudo] password for martin: 
+root@debian:~# cd ~root/repo/SecurityAndRiskProject/ConfigLDAP
+root@debian:~# nano grants.ldif
+root@debian:~# ldapmodify -Y EXTERNAL -H ldapi:/// -f grants.ldif 
 root@debian:~# 
+SASL/EXTERNAL authentication started
+SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+SASL SSF: 0
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
+modifying entry "olcDatabase={1}mdb,cn=config"
+
 
 ```
 
@@ -316,12 +350,12 @@ B) Controleer de nieuwe situatie:
 
 ```
 
-Vanaf nu is het mogelijk om met de user `webuserldap` de LDAP-objecten te managen onder de DN `ou=samenfit,dc=samenfit,dc=local`.
+Vanaf nu is het mogelijk om met de user `webuserldap` de LDAP-objecten te managen onder de DN 
+`ou=samenfit,dc=samenfit,dc=local`.
 
 Je kunt dit testen door in de LDAP-GUI de connection settings te veranderen naar de user `webuserldap`. 
 
 Zie ook het voorbeeld om met PHP een user aan te maken.
-
 
 # Oplossing van fouten met de security
 Soms heb je misschien een typefout gemaakt in de LDIF-file en moet je zaken corrigeren.
@@ -354,6 +388,7 @@ opnieuw uit.
   * [LDAP](https://ldap.com) 
   * [LDAP Password encryptie & Apache WebServer](https://httpd.apache.org/docs/2.4/misc/password_encryptions.html)
   * [LDAP Access Control (openLDAP)](https://www.openldap.org/doc/admin24/access-control.html)
+  * [nano editor](https://linuxize.com/post/how-to-use-nano-text-editor/)
 
 
 
