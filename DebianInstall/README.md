@@ -1,7 +1,7 @@
 # Installatie van Debian binnen Virtual Box (v6)
 
 Download een image bestand van Debian Net Installation :
-[Debian Website](https://www.debian.org/CD/netinst/). De huidige versie ten tijde van dit schrijven is *10.6.0*. Hoewel
+[Debian Website](https://www.debian.org/CD/netinst/). De huidige versie ten tijde van dit schrijven is *10.7.0*. Hoewel
 er steeds nieuwe versies uitgegeven worden is de procedure hetzelfde. 
 
 Kies het juiste image voor jouw architectuur (vermoedelijk AMD64).
@@ -34,7 +34,7 @@ geheugen nodig. Een paar handreikingen:
 
 ![VirtualBox-001](./images/VirtualBox-02a.png)
 
-### Harde schijf harde schijf    
+### Harde schijf 
 
 In de volgende stap maak je keuzes voor het type harde schijf dat je wilt gebruiken. Dit is een virtuele
 schijf die wordt gesimuleerd door één bestand op je de echte harde schijf van je laptop/PC. De omvang
@@ -71,7 +71,8 @@ Op het tweede tabblad (bovenin) kun je instellen hoeveel CPU's (cores) je wilt a
 ![VirtualBox-001](./images/VirtualBox-22.png)
 
 Bij het tabblad "Video" kun je instellen hoeveel geheugen je voor video wilt toewijzen en of je 
-2D/3D versnelling wilt gebruiken. 
+2D/3D versnelling wilt gebruiken. Let op dat je voor een grafische user interface al gauw 64MB moet toewijzen om problemen te voorkomen.
+
 ![VirtualBox-001](./images/VirtualBox-20.png)
 
 ### Opstartinstellingen
@@ -80,13 +81,20 @@ keer moeten we opstarten van een ander device dan de nieuwe virtuele harddisk: w
 geinstalleerd op onze virtuele harddisk. 
 We doen dit door de gedownloade ISO als CD te koppelen. Dit wordt in onderstaande schermen uitgelegd.
 
+Ga eerst naar de instellingen van de machine. Open het tabblad 'Opslag'. 
 ![VirtualBox-001](./images/VirtualBox-06.png)
 
 ![VirtualBox-001](./images/VirtualBox-07.png)
 
+Hier zie je de huidige instellingen van de opslag. We gaan nu een ISO-image dat je gedownload hebt koppelen als optische schijf (CD). Selecteer in de lijst met controllers en schijven de 'Controller: IDE' en daaronder het icoontje met een CD en het label 'Leeg'. 
+
 ![VirtualBox-001](./images/VirtualBox-08.png)
 
+Selecteer nu in het rechtergedeelte van het scherm  ('attributen') het icoontje met een CD en zoek je ISO image op dat je gedownload hebt. 
+
 ![VirtualBox-001](./images/VirtualBox-08a.png)
+
+Je ziet nu dat het label 'leeg' vervangen is door jouw ISO image van Debian. Zet vervolgens nog het vinkje 'Live CD/DVD' zodat er meteen opgestart wordt later van deze CD. 
 
 ![VirtualBox-001](./images/VirtualBox-09.png)
 
@@ -173,12 +181,15 @@ Kies hier voor 'YES' om de wijzigingen door te voeren en verder te gaan.
 
 ![DebianInstall-001](./images/debian-install-024.png)
 
+Kies hier voor **'No'** (in de afbeelding staat onterecht 'YES' aangevinkt)!
+
 ![DebianInstall-001](./images/debian-install-025.png)
 
 ![DebianInstall-001](./images/debian-install-026.png)
 
 De packagemanager wil nu aanvullende pakketten ophalen en vraagt je om een locatie te kiezen
 die dichtbij is, zodat het downloaden sneller gaat.
+
 ![DebianInstall-001](./images/debian-install-027.png)
 
 Je kunt ook kiezen voor bijvoorbeeld de Universiteit van Twente (debian.snt.utwente.nl).
@@ -188,12 +199,15 @@ Mocht je achter een proxy zitten dan kun je deze hier configureren.
 ![DebianInstall-001](./images/debian-install-029.png)
 
 Nu wordt dan daadwerkelijk de rest van het OS geinstalleerd.
+
 ![DebianInstall-001](./images/debian-install-030.png)
 
 Maak hier je eigen keuze.
+
 ![DebianInstall-001](./images/debian-install-031.png)
 
 De installatie start...
+
 ![DebianInstall-001](./images/debian-install-032.png)
 
 Na de basisinstallatie kunnen veel gebruikte pakketten geselecteerd worden. Voor een headless server gebruik
@@ -201,15 +215,20 @@ je geen desktop omgeving, dus zorg dat het bovenste pakket en de pakketten die m
 niet geselecteerd worden.
 
 Zorg dat SSH *wel* aan staat! Dan kun je je server straks via SSH in ieder geval ook benaderen. 
+
+Ik adviseer om **geen** Desktop environment te installeren. We gaan later zorgen dat je op afstand zaken kunt regelen via SSH. Kies je toch voor een Desktopomgeving, dan adviseer ik een lichtgewicht omgeving zoals LXDE of XFCE.
+
 ![DebianInstall-001](./images/debian-install-033.png)
 
 ![DebianInstall-001](./images/debian-install-034.png)
 
 Na het installatieproces moet de boot-loader geinstalleerd worden. Deze zorgt er voor dat Virtual Box
 je OS daadwerkelijk kan vinden en opstarten.
+
 ![DebianInstall-001](./images/debian-install-035.png)
 
 Installeer op de enige schijf. 
+
 ![DebianInstall-001](./images/debian-install-036.png)
 
 ![DebianInstall-001](./images/debian-install-037.png)
@@ -219,6 +238,7 @@ De installatie is klaar en we kunnen opnieuw opstarten.
 LET OP! Als je de configuratie van de 'CD' met het installatie bestand op een andere manier hebt gekoppeld
 dan kan het zijn dat je installatie proces opnieuw begint. In dat geval ga je in de configuratie
 van je VM in Virtual box eerst je CD ontkoppelen voordat je opnieuw je VM opstart.
+
 ![DebianInstall-001](./images/debian-install-038.png)
 
 ![DebianInstall-001](./images/debian-install-039.png)
@@ -227,14 +247,119 @@ Nu wordt je VM daadwerkelijk voor de eerste keer opgestart.
 
 ![DebianInstall-001](./images/debian-install-040.png)
 
-Eerst krijg je het schermv an GRUB (de bootloader) te zien. Je kunt hier op <enter> drukken om door te gaan.  
+Eerst krijg je het schermv an GRUB (de bootloader) te zien. Je kunt hier op <enter> drukken om door te gaan.
+
 ![DebianInstall-001](./images/debian-install-041.png)
 
 Daarna start het boot-proces van de VM daadwerkelijk.
+
 ![DebianInstall-001](./images/debian-install-043.png)
 
 Na verloop van tijd kun je inloggen. Login met `root` en je zelfgekozen wachtwoord.
+
 ![DebianInstall-001](./images/debian-install-044.png)
 
 Na het inloggen krijg je wat informatie over de gekozen distributie / versie.
+
 ![DebianInstall-001](./images/debian-startup-004.png)
+
+## Debian bijwerken naar laatste updates.
+Hoewel je net waarschijnlijk het laatste image van Debian hebt gedownload, zijn er zeer waarschijnlijk al weer updates
+verschenen. Deze kun je met onderstaande commando's bijwerken. Doe dit voordat je verder gaat. Zorg dat je bent ingelogd
+als `root`! 
+
+```bash
+root@debian: ~# apt update
+```
+Dit commando kijkt of er updates zijn. Zo ja, dan installeer je deze met onderstaande commando:
+```bash
+root@debian:~# apt update
+```
+
+Later willen we onze eigen user (in mijn geval `martin`) mogelijk ook commando's uit laten voeren met verhoogde rechten
+(*elevated rights*). Daarvoor gebruik je dan het commando `sudo` . We gaan dit commando nu eerst installeren en kennen
+vervolgens de gebruiker `martin` toe aan de groep met gebruikers die gebruik mag maken van dit commando.
+
+
+```bash
+root@debian:~# apt install sudo
+root@debian:~# adduser marti sudo
+Adding user `martin' to group `sudo' ...
+Adding user martin to group sudo
+Done.
+root@debian:~# 
+```
+
+Later kun je dan je rechten tijdelijk verhogen of een *elevated prompt* openen. De eerste keer ziet dat er zo uit:
+(login via SSH)
+```bash
+martin@debian:~$ sudo -i
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+[sudo] password for martin: 
+root@debian: ~# 
+root@debian: ~# who am i
+martin   pts/0        2021-01-09 14:33 (192.168.123.11)
+root@debian:~# 
+```
+
+### SSH Toegang
+Voor het volgen van de andere tutorials is het handig dat je op afstand kunt werken op je Virtuele Machine. Dat doen
+we dan via het commando SSH. In zowel Linux (Ubuntu, Debian, Kali) en Windows 10 is dit óf standaard aanwezig of 
+simpel te installeren.
+
+Om te zorgen dat de VM op afstand de VM via het netwerk kunnen bereiken moet je zorgen dat je VM ook een IP-adres 
+krijgt dat de router van het netwerk ook kent. Standaard is dat niet zo binnen Virtual Box. 
+
+We gaan in onderstaande eenvoudige scenario er van uit dat je **thuis** via een router werkt. Open de netwerkinstellingen 
+de VM (dat kan via Virtual Box óf terwijl je VM gewoon draait via het host-menu). Voor een uitgebreide handleiding
+om je netwerk goed in te stellen met Virtual Box zie [Netwerk installen](../Netwerk/README.md).
+
+![Networksettings01](./images/netwerksettings01.png)
+
+Verander de instelling bij 'Gekoppeld aan' in 'Bridged Adapter'. Sla de instellingen op met 'OK' en ga naar je VM. 
+Zorg dat je ingelogd bent als `root` en voer onderstaande commando's uit:
+
+```bash
+root@debian:~# dhclient
+root@debian:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:59:0e:97 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 84971sec preferred_lft 84971sec
+    inet 192.168.123.172/24 brd 192.168.123.255 scope global dynamic enp0s3
+       valid_lft 85509sec preferred_lft 85509sec
+    inet6 fe80::a00:27ff:fe59:e97/64 scope link 
+       valid_lft forever preferred_lft forever
+root@debian:~# 
+```
+
+Je ziet nu als het goed is een IP-adres dat bruikbaar is in je eigen netwerk bij enp0s3 (in mijn geval `192.168.123.172`). 
+
+Start nu een ssh client als volgt:
+```bash
+ssh martin@192.168.123.172
+The authenticity of host '192.168.123.172 (192.168.123.172)' can't be established.
+ECDSA key fingerprint is SHA256:8jGsPFtJssdB5mHKIhC6Xe6NFmA2DTVX93H9UZ64B24.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.123.172' (ECDSA) to the list of known hosts.
+martin@192.168.123.172's password: 
+```
+
+Let op: de eerste keer dat je verbinding maakt met zo'n computer via SSH worden sleutels uitgewisseld. De `fingerprint`
+daarvan wordt opgenomen in een file (`known_hosts`) als je bevestigd dat deze correct is. Zorg dat je dus `yes` antwoord
+op deze vraag.
+
+Je bent nu verbonden met je VM 'op afstand' zodat ook vaak kopiëren/plakken werkt vanuit de rest van de tutorial.
+

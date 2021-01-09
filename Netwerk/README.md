@@ -29,12 +29,13 @@ bij [Oracle Virtual Box](https://www.virtualbox.org/manual/ch06.html). De meest 
   1. Host-Only Adapter
   
 Op de website van Oracle staat onderstaande afbeelding.
+
 ![General Networking](./images/network-general-01.png)  
 
 Als je in je VM alleen een internet verbinding nodig hebt dan is de eerste oplossing (`NAT`) prima bruikbaar. Echter
 het delen van bestanden met je Windows/MacOS/Linux-host is een probleem.
 
-Als je thuis werkt en je router staat toe dat op jouw host-OS een VM een IP-adres krijgt, dan kun je gebruik
+Als je **thuis werkt** en je router staat toe dat op jouw host-OS een VM een IP-adres krijgt, dan kun je gebruik
 maken van `Network Bridge Adapter`. Je VM krijgt dan een IP-adres dat alle machines in het netwerk kunnen zien.
 In wezen wordt je VM dan een server in je netwerk. Op deze manier kunnen andere apparaten (Laptop, mobiele telefoon)
 gebruik maken van alle diensten (LDAP, Samba, Webserver etc) die op jouw server draaien. 

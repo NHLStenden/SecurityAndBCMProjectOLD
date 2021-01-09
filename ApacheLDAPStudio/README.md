@@ -10,7 +10,7 @@ Ga naar het menu, en klik op `LDAP` en dan `New Connection`. Er wordt een dialoo
 ![img2](images/config-apache-directory01.png)
 Vul de gegevens in zoals weergegeven:
   * Connection name mag je zelf weten
-  * Hostname = localhost óf het IP-adres van je Virtuele Machine (bijv. 10.0.0.2)
+  * Hostname = localhost óf het IP-adres van je Virtuele Machine (bijv. 10.0.0.2 of 192.168.1.45)
   * Port = 389
   
 Druk vervolgens op de knop 'Check Network Parameter' om te kijken of de LDAP-service bereikt kan worden. Als dat lukt krijg je onderstaande bevestiging: 
@@ -57,7 +57,9 @@ Om later gebruikers op te kunnen voeren, maken we gebruik van onderstaande schem
   * ObjectClass = person
   * ObjectClass = top
   
-Als het goed is zijn deze al geinstalleerd. Je kunt dit checken   in de Schema Browser: LDAP Directory Studio --> Menu-->LDAP-->Schema Browser
+Als het goed is zijn deze al geinstalleerd. Je kunt dit checken in de Schema Browser: 
+`LDAP Directory Studio --> Menu-->LDAP-->Open Schema Browser`
+
 ![schema browser](images/config-ldap-schema01.png)
 
 Type bij de zoekbalk `inetOrgPerson` in en je ziet als het goed is het schema in de zoekresultaten verschijnen. 
