@@ -263,6 +263,11 @@ Na het inloggen krijg je wat informatie over de gekozen distributie / versie.
 
 ![DebianInstall-001](./images/debian-startup-004.png)
 
+
+# Backup maken
+Nu je machine in de basis klaar is, is het verstandig om een kloon te maken van je VM. Dat kan eenvoudig via Virtual Box of door het **disk** bestand te kopieren.
+
+
 ## Debian bijwerken naar laatste updates.
 Hoewel je net waarschijnlijk het laatste image van Debian hebt gedownload, zijn er zeer waarschijnlijk al weer updates
 verschenen. Deze kun je met onderstaande commando's bijwerken. Doe dit voordat je verder gaat. Zorg dat je bent ingelogd
@@ -307,6 +312,9 @@ root@debian: ~# who am i
 martin   pts/0        2021-01-09 14:33 (192.168.123.11)
 root@debian:~# 
 ```
+
+# Backup maken
+Nu je machine in de basis klaar is én voorzien van de laatste updates, is het verstandig om nogmaals een kloon te maken van je VM. Dat kan eenvoudig via Virtual Box of door het **disk** bestand te kopieren.
 
 ### SSH Toegang
 Voor het volgen van de andere tutorials is het handig dat je op afstand kunt werken op je Virtuele Machine. Dat doen
@@ -362,4 +370,3 @@ daarvan wordt opgenomen in een file (`known_hosts`) als je bevestigd dat deze co
 op deze vraag.
 
 Je bent nu verbonden met je VM 'op afstand' zodat ook vaak kopiëren/plakken werkt vanuit de rest van de tutorial.
-
