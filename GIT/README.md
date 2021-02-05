@@ -29,7 +29,7 @@ We maken een kloon (`clone`) door middel van een `git clone` commando in een apa
 ```bash
 root@debian:~# mkdir -p ~root/repo
 root@debian:~# cd ~root/repo
-root@debian:~/repo# git clone https://github.com/NHLStenden/SecurityAndRiskProject
+root@debian:~/repo# git clone https://github.com/NHLStenden/SecurityAndBCMProject
 Cloning into 'SecurityAndRiskProject'...
 remote: Enumerating objects: 222, done.
 remote: Counting objects: 100% (222/222), done.
