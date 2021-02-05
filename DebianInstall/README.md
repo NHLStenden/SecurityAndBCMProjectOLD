@@ -267,6 +267,21 @@ Na het inloggen krijg je wat informatie over de gekozen distributie / versie.
 # Backup maken
 Nu je machine in de basis klaar is, is het verstandig om een kloon te maken van je VM. Dat kan eenvoudig via Virtual Box of door het **disk** bestand te kopieren.
 
+  1. Log uit (druk op control+D)
+  2. Open het menu van de virtual box --> Bestand --> Sluiten.
+  3. Kies voor 'Het shutdown-signaal sturen'.
+  
+De machine wordt nu netjes uitgezet. 
+
+Ga terug naar de `Oracle VM VirtualBox` en zoek je virtuele machine op. We gaan nu de kloon aanmaken:
+  1. Menu-->Machine-->Kloon
+  2. Kies een map
+  3. Start het proces met 'Volgende'. 
+  4. Kies een map
+  5. Gebruik 'Volledige kloon'
+  
+Nadat het kloon-proces klaar is verschijnt er een nieuwe VM in je lijst met VM's. 
+  
 
 ## Debian bijwerken naar laatste updates.
 Hoewel je net waarschijnlijk het laatste image van Debian hebt gedownload, zijn er zeer waarschijnlijk al weer updates
