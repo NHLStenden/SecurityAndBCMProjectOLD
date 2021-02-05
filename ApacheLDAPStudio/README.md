@@ -55,7 +55,7 @@ Zet daarna het vinkje uit bij `Get Base DN's from Root DSE` en kies in de dropdo
 ## Check op geinstalleerde schema's
 Om later gebruikers op te kunnen voeren, maken we gebruik van onderstaande schema's:
   * ObjectClass = inetOrgPerson
-  * ObjectClass = organizationPerson
+  * ObjectClass = organizationalPerson
   * ObjectClass = person
   * ObjectClass = top
   
