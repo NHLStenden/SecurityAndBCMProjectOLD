@@ -26,6 +26,7 @@ als admin inloggen zonder wachtwoord op te geven!
 Echter, voor het testen van je configuratie is het wel nuttig om nu even het wachtwoord opslaan aan te zetten, zodat we in dit dialoogvenster kunnen testen.
 
 ![img4](images/config-apache-directory04a.png)
+
 Voer de gegevens in:
   * Bind DN or User: `cn=admin, dc=samenfit, dc=local`
   * Bind password : je wachtwoord dat je bij installatie gebruikt hebt.
@@ -41,6 +42,7 @@ Druk op `Next` om naar de volgende stap te gaan.
 We gaan nu de DIT (Directory Information Tree) uitvragen: welke basis DN's zitten er in de root van de tree? 
 
 ![img6](images/config-apache-directory05.png)
+
 Klik in bovenstaande afbeelding op de knop `Fetch BaseDN's`. De dropdown-lijst links van deze button wordt nu ververst. 
 
 ![img7](images/config-apache-directory06.png)
