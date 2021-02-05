@@ -61,8 +61,6 @@ Kies voor `<Nee>`  om het verouderde LDAP-protocol versie 2 NIET toe te staan.
  
 ![slapd01](images/slapd-reconfig-06.png)
 
-![slapd01](images/slapd-reconfig-07.png)
-
 ## Testen OpenLDAP
 Om wat testen te kunnen doen kunnen we zowel bash-commando's gebruiken, óf een GUI. 
 In het eerste geval gebruik je de command-line van je VM met onderstaande commando's: 
