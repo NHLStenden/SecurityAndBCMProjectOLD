@@ -293,7 +293,7 @@ root@debian: ~# apt update
 ```
 Dit commando kijkt of er updates zijn. Zo ja, dan installeer je deze met onderstaande commando:
 ```bash
-root@debian:~# apt update
+root@debian:~# apt upgrade
 ```
 
 Later willen we onze eigen user (in mijn geval `martin`) mogelijk ook commando's uit laten voeren met verhoogde rechten
