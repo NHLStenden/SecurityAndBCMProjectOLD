@@ -144,7 +144,7 @@ Daarna voeren we het attribuut `userPassword` op. Na het aanmaken krijg je metee
 
 ![newUser10](images/ldap-new-user08.png)
 
-Let op: je kiest hier voor CRYPT-SHA-265 en niet voor SHA-256. Deze laatste staat je wel toe om een wachtwoord op te voeren
+**Let op**: je kiest hier voor CRYPT-SHA-265 en niet voor SHA-256. Deze laatste staat je wel toe om een wachtwoord op te voeren
 maar niet meer om er verbinding mee te maken. Zie [verderop](#wachtwoord) voor een testprocedure
 
 ![newUser10](images/ldap-new-user09.png)
@@ -293,10 +293,10 @@ en staan in deze repository onder deze map:
 
 Deze heb je als het goed is opgehaald via een `git clone` commando (zie [hier](../GIT/README.md)).
 
-A) Voer vervolgens onderstaande commando uit, ingelogd als  `root`. Je kunt eenvoudig wisselen naar de 
+Voer vervolgens onderstaande commando uit, ingelogd als  `root`. Je kunt eenvoudig wisselen naar de 
 root-gebruiker via `sudo -i` (-i staat voor interactieve shell).
 
-Let op: deze procedure maakt gebruik van een bestand genaamd `grants.ldif`. Daar zitten echter instellingen in die mogelijk
+**Let op**: deze procedure maakt gebruik van een bestand genaamd `grants.ldif`. Daar zitten echter instellingen in die mogelijk
 bij jouw LDAP-configuratie anders zijn. 
 
 In mijn voorbeeldbestand wordt gebruik gemaakt van `ou=mijnsite,dc=mijnsite,dc=local`. Als dat bij jou anders is zul 
