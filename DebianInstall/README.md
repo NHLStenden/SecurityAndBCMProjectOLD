@@ -303,7 +303,7 @@ vervolgens de gebruiker `martin` toe aan de groep met gebruikers die gebruik mag
 
 ```bash
 root@debian:~# apt install sudo
-root@debian:~# adduser marti sudo
+root@debian:~# adduser martin sudo
 Adding user `martin' to group `sudo' ...
 Adding user martin to group sudo
 Done.
