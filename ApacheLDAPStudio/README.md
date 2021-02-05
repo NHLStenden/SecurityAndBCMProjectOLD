@@ -1,6 +1,6 @@
 # Configuratie Apache Directory Studio for LDAP
 
-Installatie volgens [deze](https://directory.apache.org/studio/download/download-linux.html) handleiding.
+Installatie volgens [deze](https://directory.apache.org/studio/) handleiding.
 
 ## Stap 1: Aanmaken nieuwe verbinding
 Als je Apache Directory Studio hebt gestart krijg je na het welkom scherm onderstaande afbeelding: 
