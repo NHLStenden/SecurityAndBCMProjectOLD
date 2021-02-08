@@ -68,8 +68,8 @@ waarschijnlijk niet leesbaar zijn voor de webserver Apache2. Dit proces maakt na
   worden dan aangemaakt met als groep `www-data`. Op deze manier kun je zorgen dat de webserver de bestanden 
   wel mag gebruiken, mits je de rechten goed instelt. Dat regelen de volgende twee items.
   1. `create mask` = 660. Dit zorgt er voor dat aangemaakte 'normale' bestanden de file-toegang goed heeft staan: `-rw-rw----`
-      1. eerste set `rw-` de eigenaar mag lezen, schrijven en uitvoeren
-      1. tweede set `rw-` de groep `www-data` mag lezen, schrijven en uitvoeren
+      1. eerste set `rw-` de eigenaar mag lezen, schrijven 
+      1. tweede set `rw-` de groep `www-data` mag lezen, schrijven 
       1. derde set `---` anderen (zijnde niet de eigenaar en groep) hebben geen rechten
   1. `directory mask = 770` als een directory aangemaakt wordt, dan krijgt deze de rechten `drwxwrx---`.
       1. eerste set `rwx` de eigenaar mag lezen, schrijven en de map betreden (inhoud zien)
