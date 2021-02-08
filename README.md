@@ -25,7 +25,7 @@ het beste in onderstaande volgorde doorlopen worden:
   
 Uiteindelijk kun je onderstaande landschap inrichten:
 
-![Landschap]("images/Virtuele Machine.png")  
+![Landschap](images/VirtueleMachine.png)  
 
 
 Martin Molema
