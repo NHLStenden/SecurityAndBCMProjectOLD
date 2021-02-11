@@ -336,6 +336,8 @@ Voor het volgen van de andere tutorials is het handig dat je op afstand kunt wer
 we dan via het commando SSH. In zowel Linux (Ubuntu, Debian, Kali) en Windows 10 is dit óf standaard aanwezig of 
 simpel te installeren.
 
+**Let op**: de `root` user mag niet inloggen bij de standaard configuratie van de SSH-daemon. Maak daarom altijd eerst een andere gebruiker aan en gebruik deze om in te loggen. Heb je toch `root`-access nodig, voeg je nieuwe gebruiker dan toe aan de `sudo` groep (zie elders in deze handleidingen).
+
 Om te zorgen dat de VM op afstand de VM via het netwerk kunnen bereiken moet je zorgen dat je VM ook een IP-adres 
 krijgt dat de router van het netwerk ook kent. Standaard is dat niet zo binnen Virtual Box. 
 
@@ -380,8 +382,9 @@ Warning: Permanently added '192.168.123.172' (ECDSA) to the list of known hosts.
 martin@192.168.123.172's password: 
 ```
 
-Let op: de eerste keer dat je verbinding maakt met zo'n computer via SSH worden sleutels uitgewisseld. De `fingerprint`
+**Let op**: de eerste keer dat je verbinding maakt met zo'n computer via SSH worden sleutels uitgewisseld. De `fingerprint`
 daarvan wordt opgenomen in een file (`known_hosts`) als je bevestigd dat deze correct is. Zorg dat je dus `yes` antwoord
 op deze vraag.
+
 
 Je bent nu verbonden met je VM 'op afstand' zodat ook vaak kopiëren/plakken werkt vanuit de rest van de tutorial.
