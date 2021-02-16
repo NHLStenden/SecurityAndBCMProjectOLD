@@ -377,6 +377,40 @@ Group: name="www-data" id=33
 root@risksec:/root# 
 ```
 
+## Werken met poorten
+Je kunt je webserver op een andere poort laten werken, bijvoorbeeld poort 8080 of poort 8443. Je moet dit dan aangeven 
+bovenin je configuratie van je virtuele host. Bijvoorbeeld
+
+```
+<VirtualHost  *:8080>
+```
+
+Om te zorgen dat Apache2 überhaupt naar deze port *kan* luisteren moet je dat ook aangeven in de Apache2 http-configuratie. Deze is te vinden op
+
+```conf
+/etc/apache2/ports.conf
+```
+
+Voeg eenvoudig een regel toe:
+```bash
+Listen 80
+listen 8080
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+```
+
+Nadat je de configuratie bestanden hebt aangepast moet je Apache2 wel herstarten of herladen:
+```bash
+ service apache2 restart
+```
+
+
 # Referenties <a name="referenties"/>
   * [Apache Virtual Hosts config](https://httpd.apache.org/docs/2.4/vhosts/examples.html)
   * [Linux: How to edit hosts file](https://manpages.ubuntu.com/manpages/bionic/en/man5/hosts.5.html)
