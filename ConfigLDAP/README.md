@@ -1,4 +1,4 @@
-# Configurate van LDAP via Apache Directory Studio en command-line (Bash)
+# Configureer LDAP via Apache Directory Studio en command-line (Bash)
 In deze handleiding zitten de volgende onderdelen
 
 1. [Aanmaken Organisational Unit](./README.md#opvoeren-gebruikers-en-groepen---organizationalunit)
@@ -33,12 +33,12 @@ Type bij `Available object classes` de tekst `Org` en er verschijnt een verkorte
 
 ![newOU02](images/ldap-newOU-02.png)
 
-![newOU02](images/ldap-newOU-03.png)
+![newOU02](images/ldap-newOU-04.png)
 
-Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ 
+Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ldap-dns-and-rdns/)
 
 
-![newOU03](images/ldap-newOU-04.png)
+![newOU03](images/ldap-newOU-03.png)
 
 Herhaal deze stappen voor het aanmaken van een ORganizationalUnit voor de Users:
 
