@@ -78,7 +78,15 @@ Klik in bovenstaande afbeelding op de knop `Fetch BaseDN's`. De dropdown-lijst l
 
 ![img7](images/config-apache-directory06.png)
 
-Zet daarna het vinkje uit bij `Get Base DN's from Root DSE` en kies in de dropdown-lijst je domeinnaam. Druk net zo lang op `Next` tot de wizard klaar is. Je komt dan in onderstaande scherm uit:
+Zet daarna het vinkje uit bij `Get Base DN's from Root DSE` en kies in de dropdown-lijst je domeinnaam. 
+
+Vervolgens moet je de edit-options instellen (*nieuw sinds versie 2021 van Apache LDAP Studio in combinatie met OpenLDAP op Debian):
+
+Zet de `Modify mode` op `Always Replace`. zie onderstaande afbeelding. 
+
+![img8](images/config-apache-directory08.png)
+
+Druk net zo lang op `Next` tot de wizard klaar is. Je komt dan in onderstaande scherm uit:
 
 ![img8](images/config-apache-directory07.png)
 
