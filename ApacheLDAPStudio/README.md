@@ -2,6 +2,37 @@
 
 Installatie volgens [deze](https://directory.apache.org/studio/) handleiding.
 
+Je hebt minimaal versie 11 nodig van Java. Tegenwoordig kun je deze downloaden via [deze](https://www.oracle.com/java/) link. Gebruik bijvoorbeeld de .exe-file of een .zip-file om deze op je systeem te installeren.
+
+Na het installeren van Apache Directory Studio kan het zijn dat je de .ini-file moet aanpassen om te zorgen dat de juiste JAVA-versie gebruikt wordt. Ga op zoek naar de regel
+`-vm` en een padnaam (Linux-style) op de volgende regel. Pas deze regel aan zodat je bijvoorbeeld onderstaande krijgt:
+
+```ini
+-startup
+plugins/org.eclipse.equinox.launcher_1.6.0.v20200915-1508.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.0.v20200915-1442
+/studio-rcp/resources/icons/linux/studio.xpm
+###
+#Uncomment_to_configure_the_language
+#https://directory.apache.org/studio/faqs.html#how-to-set-the-language-of-studio
+#-nl
+#en
+###
+#Uncomment_to_configure_Java_version_to_use
+#https://directory.apache.org/studio/faqs.html#how-to-set-the-java-vm-to-use
+-vm
+C:\PortableApps\CommonFiles\jdk-15.0.2\bin
+-vmargs
+-Dosgi.requiredJavaVersion=11
+###
+#Uncomment_to_configure_heap_memory
+#https://directory.apache.org/studio/faqs.html#how-to-increase-the-heap-memory
+#-Xms1g
+#-Xmx2g
+
+```
+
 ## Stap 1: Aanmaken nieuwe verbinding
 Als je Apache Directory Studio hebt gestart krijg je na het welkom scherm onderstaande afbeelding: 
 ![img1](images/config-apache-directory00.png)
