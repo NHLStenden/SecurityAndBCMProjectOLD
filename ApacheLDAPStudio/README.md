@@ -88,7 +88,7 @@ Zet de `Modify mode` op `Always Replace`. zie onderstaande afbeelding.
 
 ![img8](images/config-apache-directory08.png)
 
-Druk net zo lang op `Next` tot de wizard klaar is. Je komt dan in onderstaande scherm uit:
+Druk `Finish` om de wizard af te ronden. Je komt dan in onderstaande scherm uit:
 
 ![img8](images/config-apache-directory07.png)
 
