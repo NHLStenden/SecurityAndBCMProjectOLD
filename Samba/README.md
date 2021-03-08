@@ -56,6 +56,7 @@ aan het einde van het bestand `/etc/samba/smb.conf` een nieuwe sectie toe. Bijvo
   path = /var/www/mijnwebsite
   valid users = martin
   force group = www-data
+  force user = www-data
   create mask = 660
   directory mask = 770
 ```
