@@ -62,7 +62,8 @@ Selecteer eerst de eerder gemaakte OU en klik met de rechter muisknop op deze OU
 Merk op dat we nu een template gebruiken van de zojuist geselecteerde OU. Nu kunnen we sneller door de wizard heen. 
 
 ![newOU03](images/ldap-newOU2-01.png)
-Vergeet niet de RDN aan te passen! Noem deze OU `groups`. 
+
+Vergeet niet de RDN aan te passen! Noem deze OU `groups`. Check of de gekozen **parent** boven in het scherm wel goed is!
 
 ![newOU03](images/ldap-newOU2-02.png)
 
