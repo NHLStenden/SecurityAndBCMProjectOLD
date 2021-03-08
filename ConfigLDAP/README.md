@@ -33,9 +33,11 @@ Type bij `Available object classes` de tekst `Org` en er verschijnt een verkorte
 
 ![newOU02](images/ldap-newOU-02.png)
 
+Het scherm ziet er dan uit zoals hier onder. 
+
 ![newOU02](images/ldap-newOU-04.png)
 
-Het scherm ziet er dan uit zoals hier onder. Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ldap-dns-and-rdns/)
+Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ldap-dns-and-rdns/)
 
 
 ![newOU03](images/ldap-newOU-03.png)
