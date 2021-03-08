@@ -39,8 +39,9 @@ Het scherm ziet er dan uit zoals hier onder.
 
 Klik op `Next` om verder te gaan. We gaan nu de attributen invullen. Elk object heeft een attribuut dat bepaald hoe het in de tree geplaatst moet worden. We noemen dit de [RDN](https://ldap.com/ldap-dns-and-rdns/)
 
-
 ![newOU03](images/ldap-newOU-03.png)
+
+Klik op `Next` om naar het overzicht te gaan met de ingestelde waarden, en sluit deze af met de `Finish` knop. 
 
 Herhaal deze stappen voor het aanmaken van een ORganizationalUnit voor de Users:
 
