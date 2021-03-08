@@ -4,8 +4,10 @@ Installatie volgens [deze](https://directory.apache.org/studio/) handleiding.
 
 Je hebt minimaal versie 11 nodig van Java. Tegenwoordig kun je deze downloaden via [deze](https://www.oracle.com/java/) link. Gebruik bijvoorbeeld de .exe-file of een .zip-file om deze op je systeem te installeren.
 
-Na het installeren van Apache Directory Studio kan het zijn dat je de .ini-file moet aanpassen om te zorgen dat de juiste JAVA-versie gebruikt wordt. Ga op zoek naar de regel
-`-vm` en een padnaam (Linux-style) op de volgende regel. Pas deze regel aan zodat je bijvoorbeeld onderstaande krijgt:
+Na het installeren van Apache Directory Studio kan het zijn dat je de .ini-file moet aanpassen om te zorgen dat de juiste JAVA-versie gebruikt wordt. Het gaat om het pad naar de `bin` directory waar de `java.exe` gevonden kan worden. 
+
+Ga op zoek naar de regel
+`-vm` en een padnaam (Linux-style) op de volgende regel. Pas deze regel aan zodat je bijvoorbeeld onderstaande krijgt. In dit voorbeeld is de JAVA versie 15 te vinden op het pad `C:\PortableApps\CommonFiles\jdk-15.0.2\bin`. 
 
 ```ini
 -startup
