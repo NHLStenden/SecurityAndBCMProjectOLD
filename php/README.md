@@ -96,11 +96,29 @@ Om te kunnen debuggen met PHP is het handig om een debugger te installeren naast
   sudo apt-get install php-xdebug
 ```
 
-
-
 jetbrains.com/help/phpstorm/debugging-with-phpstorm-ultimate-guide.html
+
+
 jetbrains.com/help/phpstorm/configuring-xdebug.html
+
+
 xdebug.org
+
 xdebug.org/docs/install
 
-   
+
+sudo apt-get install php-xdebug
+
+
+### Debug en XAMPP
+
+gist.github.com/odan/1abe76d373a9cbb15bed
+
+
+Move the downloaded dll file to: C:\xampp\php\ext
+
+13:58
+odan.github.io/2020/12/03/xampp-xdebug-setup-php8.html
+
+13:58
+https://xdebug.org/files/php_xdebug-3.0.0-8.0-vs16-x86_64.dll
