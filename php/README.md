@@ -88,3 +88,19 @@ Een voorbeeld:
 **Let op**: ALs je heel veel gebruikers hebt, of gebruikers in een groep, dan kan het zijn dat resultaten gepagineerd
 opgeleverd worden. Kijk in dat geval eens bij [LDAP Paged Results Response](http://php.net/manual/en/function.ldap-control-paged-result-response.php).
    
+   
+## Debugging en PHPStorm & LDAP
+Om te kunnen debuggen met PHP is het handig om een debugger te installeren naast PHP. In dit geval kies ik voor XDebug. 
+
+```bash
+  sudo apt-get install php-xdebug
+```
+
+
+
+jetbrains.com/help/phpstorm/debugging-with-phpstorm-ultimate-guide.html
+jetbrains.com/help/phpstorm/configuring-xdebug.html
+xdebug.org
+xdebug.org/docs/install
+
+   
