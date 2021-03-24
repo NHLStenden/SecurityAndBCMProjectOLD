@@ -248,7 +248,8 @@ Nu hebben we de LDAP zaken op orde, maar moeten we nog voorkomen dat we met de *
 moeten doen. Daarom gebruiken we de nieuwe users `webuserldap` om deze rechten te geven om dit te doen. Daarvoor 
 moeten we zogenaamde ACL's (*Access Control List*) opvoeren. Zie voor uitgebreide informatie de link onderaan.  
 
-Dat gaat via het commando `ldapmodify`.
+Om deze aanpassingen door te voeren moeten we een bestand maken met de gewenste aanpassingen. ALs dat bestand klaar is kun je de aanpassingen
+doorvoeren met het commando  `ldapmodify`.
 
 Eerst moeten we kijken wat de huidige stand van zaken is. Dat gaat met `slapcat`. Er volgt dan zeer veel informatie. We 
 zijn op zoek naar `dn: olcDatabase={1}mdb,cn=config`. Vervolgens staan er een aantal `olcAccess`-regels.
@@ -292,13 +293,16 @@ diezelfde regel óók leesrechten hersteld worden voor alle gebruikers op alle o
 
 Om verder te kunnen gaan dienen een aantal commando's uitgevoerd te worden. Dit zijn bestanden die ik heb voorbereid
 en staan in deze repository onder deze map:
-  * `execute-grants.sh`
   * `grants.ldif`
 
 Deze heb je als het goed is opgehaald via een `git clone` commando (zie [hier](../GIT/README.md)).
 
 Voer vervolgens onderstaande commando uit, ingelogd als  `root`. Je kunt eenvoudig wisselen naar de 
 root-gebruiker via `sudo -i` (-i staat voor interactieve shell).
+
+```
+  ldapmodify -Y EXTERNAL -H ldapi:/// -f grants.ldif
+```
 
 **Let op**: deze procedure maakt gebruik van een bestand genaamd `grants.ldif`. Daar zitten echter instellingen in die mogelijk
 bij jouw LDAP-configuratie anders zijn. 
