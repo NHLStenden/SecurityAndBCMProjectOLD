@@ -1,6 +1,7 @@
 # SecurityAndRiskProject
 
-In dit project gaan we aan de slag met Linux (bijv. Ubuntu), Apache en LDAP. Het hoofdproduct van dit project is een website die we gaan beveiligen op meerdere manieren:
+In dit project gaan we aan de slag met Linux (Debian 11), Apache en LDAP. Het hoofdproduct van dit project is een 
+website die we gaan beveiligen op meerdere manieren:
   * Operating Systeem
   * File Systeem
   * Database
@@ -11,10 +12,12 @@ We gebruiken hiervoor de volgende producten:
   * OpenLDAP
   * Apache 2 webserver
   
-VOor het beheren van de LDAP-entiteiten gebruiken we Apache Directory Studio. 
+Voor het beheren van de LDAP-entiteiten gebruiken we Apache Directory Studio. 
 
-De verschillende handleidingen voor installatie en configuratie zijn te vinden in onderstaande locaties. Deze kunnen
-het beste in onderstaande volgorde doorlopen worden:
+De verschillende handleidingen voor installatie en configuratie zijn te vinden in onderstaande locaties. Deze zijn in 
+de basis al doorlopen voor de Virtuele Machine die je aangeleverd krijgt. Echter, de nodige veiligheidsmaatregelen zijn
+nog niet toegepast.
+
   1. [Installatiehandleiding Debian]( ./DebianInstall/README.md )
   1. [Ophalen van bestanden](./GIT/README.md)
   1. [Installatie OpenLDAP](./OpenLDAP/README.md)
@@ -80,8 +83,8 @@ applicaties maken gebruik van deze oplossing zodat ze zelf geen account- en wach
 die door de IAM-tooling worden bijgehouden worden door elke applicatie zelf vertaald naar permissies. Daarmee geven ze 
 invulling aan de vraag
 
-> "Wat betekent het voor deze gebruiker in **mijn applicatie** als ze rol X of Y hebben voor het wel of niet kunnen uitvoeren
-van een bepaalde functie, handeling of proces?" 
+> "Wat betekent het voor deze gebruiker in **mijn applicatie** als ze rol X of Y hebben voor het wel of niet kunnen 
+> uitvoeren van een bepaalde functie, handeling of proces?" 
 
 Als de rol van de *medewerker* verandert doordat hij bijvoorbeeld een andere functie krijgt, dan zal deze door de IAM-tooling
 doorvertaald worden naar technische rollen in het *account* van de LDAP omgeving. Doordat jouw applicatie die rollen 
@@ -105,5 +108,5 @@ Martin Molema
 
 mail: [martin.molema@nhlstenden.com](mailto:martin.molema@nhlstenden.com)
 
-Laatste update op 10-maart-2021
+Laatste update op 5 januari 2022
   
