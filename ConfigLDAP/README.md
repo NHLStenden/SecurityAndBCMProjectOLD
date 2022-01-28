@@ -5,6 +5,8 @@ In deze handleiding zitten de volgende onderdelen
 2. [Aanmaken groepen](./README.md#opvoeren-gebruikers-en-groepen---usergroups)
 3. [Koppelen gebruikers en groepen](./README.md#koppelen-gebruikers-aan-groep)
 3. [LDAP netjes Beveiligen](./README.md#ldap-beveiligen)
+
+Zie ook de [video](https://web.microsoftstream.com/video/33a67762-4c67-433a-b9af-f11832b1a15a)
  
 Testen door middel van een GUI gaat met de Apache Directory Studio. Je kunt deze op je Windows PC installeren 
 of op je virtuele machine. Als je via je WIndows PC naar de LDAP-service wilt verbinden, 
